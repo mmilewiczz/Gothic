@@ -1,3 +1,13 @@
+var maxHp = 0;
+var maxMp = 0;
+
+function obliczanieMaxHp(){
+	maxHp = postac[0].hp;
+}
+
+function obliczanieMaxMp(){
+	maxMp = postac[0].mp;
+}
 var obozy=[{
 		opis:"  Stary Obóz to duży kamienny zamek otoczony drewnianym obmurowaniem,tzw. zewnętrznym pierścieniem. To miejsce w typowym średniowiecznym klimacie. Dzięki kopalni i handlu rudą mieszkańcy zapewnili sobie dostatnie życie. W chwili inkantacji Bariery nastąpił tu bunt więźniów pod przywództwem Gomeza. Teraz to on o jego ludzie sprawują władzę. Można tu również spotkać Magów Ognia, ostatnich ludzi wiernych królestwu, oraz współtwórców bariery. Stary Obóz prowadzi ciągłą walkę z Nowym, zaś przedstawicieli sekty ma za szaleńców. Mimo to prowadzi z nimi handel jak i ze światem zewnętrznym.",
 		cechy:[{
@@ -5,8 +15,22 @@ var obozy=[{
 				mp:8,
 				sila:12,
 				zrecznosc:8,
+				szybkosc:10,
+				celnosc:10,
+				inteligencja:10,
 				zloto:0,
-				poziom:1,
+				poziom:0,
+				doswiadczenie:0,
+				oboz:"Stary Obóz",
+				krag: 0,
+				oPociski: 0,
+				oMagia: 0,
+				oBron: 0,
+				oOgien: 0,
+				uMiecz1: 10,
+				uMiecz2: 10,
+				uLuk: 10,
+				uKusza: 10,
 		}]
 		
 },{
@@ -16,8 +40,14 @@ var obozy=[{
 			mp:10,
 			sila:10,
 			zrecznosc:12,
+			szybkosc:10,
+			celnosc:10,
+			inteligencja:10,
 			zloto:0,
-			poziom:1,
+			poziom:0,
+			doswiadczenie:0,
+			oboz:"Nowy Obóz",
+			krag: 0,
 	}],
 },{
 	opis:'  Po przybyciu do Koloni część więźniów zaczęła mieć wizje. Ukazała im się boska istota, potężniejsza i bardziej sprawiedliwa od samego Innosa. Był to Śniący, który wskazał im drogę na bagna. Tam znaleźli opuszczone orkowe ruiny, pamiętające jeszcze pierwszą wojnę. Odkryli również sposób na przygotowywanie skrętów z rosnącego tam bagiennego ziela. Brak jakichkolwiek zobowiązań, za wyjątkiem modlitwy, przyciągnął wielu nowych wyznawców i tak powstał trzeci obóz. Jego założyciele objęli stanowisko Guru, pośredników między Śniącym, a ludem. Bractwo prowadzi handel zielem na terenie całej koloni, stara się nawracać kopaczy w Starym Obozie, wreszcie wysyła elitarnych wojowników do Kopalni, aby zbierali wnętrzności pełzaczy, potrzebne do rytuału "Wielkiego Przyzwania".',
@@ -26,8 +56,14 @@ var obozy=[{
 			mp:12,
 			sila:8,
 			zrecznosc:8,
+			szybkosc:10,
+			celnosc:10,
+			inteligencja:10,
 			zloto:0,
-			poziom:1,
+			poziom:0,
+			doswiadczenie:0,
+			oboz:"Sekta",
+			krag: 0,
 	}],
 	
 	
