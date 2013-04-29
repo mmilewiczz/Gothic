@@ -14,18 +14,24 @@ var menu = {
 var postac = {};
 
 var canvas,
+skala,
 tempX = 500, 
-tempX2 = 0,
-tempY2 = 0,
+tempX2 = 700,
+tempY2 = 100,
+tempX3 = 0,
+stopnioweRysowanie = 0,
+stopnioweRysowanie1 = 0,
 konsolaWpisywanie = [ ],
 clicked,
 canvas2,
 ctx2,
 ctx,
-musicOn = true,
+musicOn = false,
 mousePos = {x:null,y:null};
 var bg = new Image(0,0);
 bg.src = 'img/bg.jpg';
+sprite = new Image(1000,1000);
+sprite.src = 'img/sprite.png';
 
 
 audio0 = new Audio('mp3/gothic0.mp3');  
@@ -42,12 +48,16 @@ audio0.addEventListener('ended', function() {
 
 function LetsBegin(){ 
 	canvas = document.getElementById('example');
+	canvas1 = document.getElementById('example2');
 	canvas2 = document.getElementById('example1');
 	if (canvas.getContext) {
 		ctx = canvas.getContext('2d');
 	}
 	if (canvas2.getContext) {
 		ctx2 = canvas2.getContext('2d');
+	}
+	if (canvas1.getContext) {
+		ctx1 = canvas1.getContext('2d');
 	}
 	
 	wyswietlanieMenu();
@@ -65,7 +75,6 @@ function LetsBegin(){
 		
 		var mouseX = evt.clientX - left + window.pageXOffset; 
 		var mouseY = evt.clientY - top + window.pageYOffset; 
-		
 		if (mouseX >335 && mouseY >75 && mouseX <455 && mouseY <105 && menu.glowne){
 			menu.glowne = false;
 			menu.nowa = true;
@@ -78,6 +87,7 @@ function LetsBegin(){
 			 menu.interfejs = true;
 			 menu.bg = false;
 			 wyswietlanieMenu();
+
 		}
 		if(mouseX >335 && mouseY >125 && mouseX <455 && mouseY <155 && menu.nowa && !menu.opcje && !menu.glowne && !menu.wczytaj ){
 			 postac = obozy[1].cechy;
@@ -197,6 +207,7 @@ function LetsBegin(){
 	canvas2.onmouseup = myUp; 
 }
 
+
 function zapisStanuGry(){
 	
 	localStorage.setItem('arraySave', JSON.stringify({
@@ -218,6 +229,33 @@ function pisanie(literka){
 	ctx.fillText(konsolaWpisywanie[0],0,500);
 	
 }
+
+/* var anim = new Image(126,32);
+anim.src = 'anim.png'; */
+
+var nr_klatki = 1;
+var liczba_klatek_anim = 8;
+var szerokosc_klatki = 401/ liczba_klatek_anim;
+var wysokosc_klatki = sprite.height;0
+
+function draw(){
+	
+	nr_klatki++;
+	if (nr_klatki>liczba_klatek_anim) {
+		nr_klatki = 1;
+	}
+	
+	var xklatki = (nr_klatki-1)*szerokosc_klatki;
+	ctx1.drawImage(sprite, xklatki, 0, szerokosc_klatki, wysokosc_klatki, 500, 50, szerokosc_klatki, wysokosc_klatki);  
+	
+}
+
+function odswiezanie1() {
+	setInterval(function() {
+			ctx1.clearRect(0, 0, 800, 600);
+			draw();
+	},100);
+} 
    
 
 

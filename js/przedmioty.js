@@ -8,6 +8,16 @@ var przedmiotyArr = [{
 				obrazeniaMax:10,
 		}],
 		zalozony:false,
-
-
+		
+},{
+	opis:"przykladowy opis2",
+	nazwa:"przykladowy przedmiot2",
+	typ:"przykladowy2",
+	cena:10002,
+	cechy:[{ 
+			obrazeniaMin:52,
+			obrazeniaMax:102,
+	}],
+	zalozony:false,
+	
 }];
