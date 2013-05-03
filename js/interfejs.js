@@ -46,99 +46,42 @@ function opis(x,y,tresc){
 }
 
 function opisy(){
-	if(mousePos.x >335 && mousePos.y >75 && mousePos.x <455 && mousePos.y <105 && menu.nowa && !menu.opcje && !menu.glowne && !menu.wczytaj){
-		if(stopnioweRysowanie >= 1){
+	if(menu.nowa){ 
+		if (mousePos.x >335 && mousePos.y >75 && mousePos.x <455 && mousePos.y <105 && menu.nowa && !menu.opcje && !menu.glowne && !menu.wczytaj) {
+			obozIndex = 0;
+		}else if(mousePos.x >325 && mousePos.y >125 && mousePos.x <465 && mousePos.y <155 && menu.nowa && !menu.opcje && !menu.glowne && !menu.wczytaj){
+			obozIndex = 1;
+		}else if(mousePos.x >285 && mousePos.y >175 && mousePos.x <505 && mousePos.y <205 && menu.nowa && !menu.opcje && !menu.glowne && !menu.wczytaj){ 
+			obozIndex = 2;
 		}else{
-			stopnioweRysowanie = stopnioweRysowanie + 0.1;
+			obozIndex = 3;
 		}
-		ctx2.fillStyle = "rgba(200,200,200,"+stopnioweRysowanie+")";
-		ctx2.fillRect(mousePos.x+20,mousePos.y-20,300,250);
-		ctx2.fillStyle = "rgba(0,0,0,"+stopnioweRysowanie+")";
-		opis(mousePos.x+35,mousePos.y,obozy[0].opis);
-		ctx2.fillText('Statystyki : ',mousePos.x+35,mousePos.y+120);
-		ctx2.fillText('Życie : '+obozy[0].cechy[0].hp,mousePos.x+35,mousePos.y+130);
-		ctx2.fillText('Mana : '+obozy[0].cechy[0].mp,mousePos.x+35,mousePos.y+140);
-		ctx2.fillText('Siła : '+obozy[0].cechy[0].sila,mousePos.x+35,mousePos.y+150);
-		ctx2.fillText('Zręczność : '+obozy[0].cechy[0].zrecznosc,mousePos.x+35,mousePos.y+160);
-		ctx2.fillText('Szybkosc : '+obozy[0].cechy[0].szybkosc,mousePos.x+35,mousePos.y+170);
-		ctx2.fillText('Celnosc : '+obozy[0].cechy[0].celnosc,mousePos.x+35,mousePos.y+180);
-		ctx2.fillText('Inteligencja : '+obozy[0].cechy[0].inteligencja,mousePos.x+35,mousePos.y+190);
-	}else if(mousePos.x >325 && mousePos.y >125 && mousePos.x <465 && mousePos.y <155 && menu.nowa && !menu.opcje && !menu.glowne && !menu.wczytaj){
-		if(stopnioweRysowanie >= 1){
+		if(obozIndex == 0 || obozIndex == 1 || obozIndex == 2){
+			on = true;
+			if(stopnioweRysowanie >= 1){
+			}else{
+				stopnioweRysowanie = stopnioweRysowanie + 0.1;
+			} 
+			ctx2.fillStyle = "rgba(200,200,200,"+stopnioweRysowanie+")";
+			ctx2.fillRect(mousePos.x+20,mousePos.y-20,300,250);
+			ctx2.fillStyle = "rgba(0,0,0,"+stopnioweRysowanie+")";
+			opis(mousePos.x+35,mousePos.y,obozy[obozIndex].opis);
+			ctx2.fillText('Statystyki : ',mousePos.x+35,mousePos.y+150);
+			ctx2.fillText('Życie : '+obozy[obozIndex].cechy[0].hp,mousePos.x+35,mousePos.y+160);
+			ctx2.fillText('Mana : '+obozy[obozIndex].cechy[0].mp,mousePos.x+35,mousePos.y+170);
+			ctx2.fillText('Siła : '+obozy[obozIndex].cechy[0].sila,mousePos.x+35,mousePos.y+180);
+			ctx2.fillText('Zręczność : '+obozy[obozIndex].cechy[0].zrecznosc,mousePos.x+35,mousePos.y+190);
+			ctx2.fillText('Szybkosc : '+obozy[obozIndex].cechy[0].szybkosc,mousePos.x+35,mousePos.y+200);
+			ctx2.fillText('Celnosc : '+obozy[obozIndex].cechy[0].celnosc,mousePos.x+35,mousePos.y+210);
+			ctx2.fillText('Inteligencja : '+obozy[obozIndex].cechy[0].inteligencja,mousePos.x+35,mousePos.y+220);
 		}else{
-			stopnioweRysowanie = stopnioweRysowanie + 0.1;
+			stopnioweRysowanie = 0;
 		}
-		ctx2.fillStyle = "rgba(200,200,200,"+stopnioweRysowanie+")";
-		ctx2.fillRect(mousePos.x+20,mousePos.y-20,300,250);
-		ctx2.fillStyle = "rgba(0,0,0,"+stopnioweRysowanie+")";
-		opis(mousePos.x+35,mousePos.y,obozy[1].opis);
-		ctx2.fillText('Statystyki : ',mousePos.x+35,mousePos.y+150);
-		ctx2.fillText('Życie : '+obozy[1].cechy[0].hp,mousePos.x+35,mousePos.y+160);
-		ctx2.fillText('Mana : '+obozy[1].cechy[0].mp,mousePos.x+35,mousePos.y+170);
-		ctx2.fillText('Siła : '+obozy[1].cechy[0].sila,mousePos.x+35,mousePos.y+180);
-		ctx2.fillText('Zręczność : '+obozy[1].cechy[0].zrecznosc,mousePos.x+35,mousePos.y+190);
-		ctx2.fillText('Szybkosc : '+obozy[0].cechy[0].szybkosc,mousePos.x+35,mousePos.y+200);
-		ctx2.fillText('Celnosc : '+obozy[0].cechy[0].celnosc,mousePos.x+35,mousePos.y+210);
-		ctx2.fillText('Inteligencja : '+obozy[0].cechy[0].inteligencja,mousePos.x+35,mousePos.y+220);
-		
-	}else if(mousePos.x >285 && mousePos.y >175 && mousePos.x <505 && mousePos.y <205 && menu.nowa && !menu.opcje && !menu.glowne && !menu.wczytaj){
-		if(stopnioweRysowanie >= 1){
-		}else{
-			stopnioweRysowanie = stopnioweRysowanie + 0.1;
-		}
-		ctx2.fillStyle = "rgba(200,200,200,"+stopnioweRysowanie+")";
-		ctx2.fillRect(mousePos.x+20,mousePos.y-20,300,250);
-		ctx2.fillStyle = "rgba(0,0,0,"+stopnioweRysowanie+")";
-		opis(mousePos.x+35,mousePos.y,obozy[2].opis);
-		ctx2.fillText('Statystyki : ',mousePos.x+35,mousePos.y+150);
-		ctx2.fillText('Życie : '+obozy[2].cechy[0].hp,mousePos.x+35,mousePos.y+160);
-		ctx2.fillText('Mana : '+obozy[2].cechy[0].mp,mousePos.x+35,mousePos.y+170);
-		ctx2.fillText('Siła : '+obozy[2].cechy[0].sila,mousePos.x+35,mousePos.y+180);
-		ctx2.fillText('Zręczność : '+obozy[2].cechy[0].zrecznosc,mousePos.x+35,mousePos.y+190);
-		ctx2.fillText('Szybkosc : '+obozy[0].cechy[0].szybkosc,mousePos.x+35,mousePos.y+200);
-		ctx2.fillText('Celnosc : '+obozy[0].cechy[0].celnosc,mousePos.x+35,mousePos.y+210);
-		ctx2.fillText('Inteligencja : '+obozy[0].cechy[0].inteligencja,mousePos.x+35,mousePos.y+220);
-	}else{
-		stopnioweRysowanie = 0;	
 	}
 	
 	
 }
 
-function wyswietlanieKonsoli(){
-	
-	for(i = 0; i < konsolaArr.length; i++){
-		var k = konsolaArr[i];
-		
-		ctx.font = "10px Segoe UI"; 
-		ctx.fillStyle = "black";
-		
-		if(k >= konsolaArr[7]){
-			konsolaArr.pop();
-		}
-		if(k == konsolaArr[6]){
-			ctx.fillText(konsolaArr[6],10,580);
-		}
-		if(k == konsolaArr[5]){
-			ctx.fillText(konsolaArr[5],10,565);
-		}
-		if(k == konsolaArr[4]){
-			ctx.fillText(konsolaArr[4],10,550);
-		}
-		if(k == konsolaArr[3]){
-			ctx.fillText(konsolaArr[3],10,535);
-		}
-		if(k == konsolaArr[2]){
-			ctx.fillText(konsolaArr[2],10,520);
-		}
-		if(k == konsolaArr[1]){
-			ctx.fillText(konsolaArr[1],10,505);
-		}
-		if(k == konsolaArr[0]){
-			ctx.fillText(konsolaArr[0],10,490);
-		}
-	}
-}
 
 function wyswietlanieEkwipunku(){
 	
@@ -146,24 +89,22 @@ function wyswietlanieEkwipunku(){
 	for(i = 0; i < przedmiotyArr.length; i++){
 		var p = przedmiotyArr[i];
 		
+		ctx.font = "10px Segoe UI"; 
+		ctx.fillStyle = "black";
 		
-		ctx2.font = "10px Segoe UI"; 
-		ctx2.fillStyle = "black";
-		
-		
-		if(p >= przedmiotyArr[11]){
-			przedmiotyArr.pop();
-		}
-		if(p == przedmiotyArr[10]){
-
-			ctx2.fillStyle = "black";
-			ctx2.fillText(p.nazwa,10,220);
-			ctx2.fillRect(265,210,10,10);
-			if(mousePos.x >265 && mousePos.y >210 && mousePos.x <305 && mousePos.y <220 && menu.ekwipunek ){
+		for(var i = 0; i < 11 ; i++){
+			if(przedmiotyArr[i]){
+				ctx2.fillStyle = "black";
+				ctx2.fillText(p.nazwa,10,50 + i * 20);
+				ctx2.fillRect(265,40 + i * 20,10,10);
+				
+				
+			}
+			if(mousePos.x >265 && mousePos.y >40 + i * 20 && mousePos.x <305 && mousePos.y <50 + i * 20 && menu.ekwipunek ){
 				if(stopnioweRysowanie1 >= 1){
 				}else{
 					stopnioweRysowanie1 = stopnioweRysowanie1 + 0.1;
-				}
+				} 
 				ctx2.fillStyle = "rgba(200,200,200,"+stopnioweRysowanie1+")";
 				ctx2.fillRect(mousePos.x+15,mousePos.y+5,250,300);
 				ctx2.fillStyle = "rgba(255,255,255,"+stopnioweRysowanie1+")";
@@ -174,212 +115,12 @@ function wyswietlanieEkwipunku(){
 				ctx2.fillText("Statystyki :",mousePos.x+15,mousePos.y+115);
 				ctx2.fillText("Obrażenia : "+p.cechy[0].obrazeniaMin+"d"+p.cechy[0].obrazeniaMax,mousePos.x+15,mousePos.y+135);
 			}
-		}
-		if(p == przedmiotyArr[9]){
-			ctx2.fillStyle = "black";
-			ctx2.fillText(p.nazwa,10,200);
-			ctx2.fillRect(265,190,10,10);
-			if(mousePos.x >265 && mousePos.y >190 && mousePos.x <305 && mousePos.y <200 && menu.ekwipunek){
-				if(stopnioweRysowanie1 >= 1){
-				}else{
-					stopnioweRysowanie1 = stopnioweRysowanie1 + 0.1;
-				}
-				ctx2.fillStyle = "rgba(200,200,200,"+stopnioweRysowanie1+")";
-				ctx2.fillRect(mousePos.x+15,mousePos.y+5,250,300);
-				ctx2.fillStyle = "rgba(255,255,255,"+stopnioweRysowanie1+")";
-				ctx2.fillText("Nazwa : "+p.nazwa,mousePos.x+15,mousePos.y+15);
-				ctx2.fillText("Typ : "+p.typ,mousePos.x+15,mousePos.y+30);
-				ctx2.fillText("Opis : "+p.opis,mousePos.x+15,mousePos.y+45);
-				ctx2.fillText("Cena : "+p.cena+" bryłek rudy",mousePos.x+155,mousePos.y+295);
-				ctx2.fillText("Statystyki :",mousePos.x+15,mousePos.y+115);
-				ctx2.fillText("Obrażenia : "+p.cechy[0].obrazeniaMin+"d"+p.cechy[0].obrazeniaMax,mousePos.x+15,mousePos.y+135);
-			}
-		}
-		if(p == przedmiotyArr[8]){
-			ctx2.fillStyle = "black";
-			ctx2.fillText(p.nazwa,10,180);
-			ctx2.fillRect(265,170,10,10);
-			if(mousePos.x >265 && mousePos.y >170 && mousePos.x <305 && mousePos.y <180 && menu.ekwipunek){
-				if(stopnioweRysowanie1 >= 1){
-				}else{
-					stopnioweRysowanie1 = stopnioweRysowanie1 + 0.1;
-				}
-				ctx2.fillStyle = "rgba(200,200,200,"+stopnioweRysowanie1+")";
-				ctx2.fillRect(mousePos.x+15,mousePos.y+5,250,300);
-				ctx2.fillStyle = "rgba(255,255,255,"+stopnioweRysowanie1+")";
-				ctx2.fillText("Nazwa : "+p.nazwa,mousePos.x+15,mousePos.y+15);
-				ctx2.fillText("Typ : "+p.typ,mousePos.x+15,mousePos.y+30);
-				ctx2.fillText("Opis : "+p.opis,mousePos.x+15,mousePos.y+45);
-				ctx2.fillText("Cena : "+p.cena+" bryłek rudy",mousePos.x+155,mousePos.y+295);
-				ctx2.fillText("Statystyki :",mousePos.x+15,mousePos.y+115);
-				ctx2.fillText("Obrażenia : "+p.cechy[0].obrazeniaMin+"d"+p.cechy[0].obrazeniaMax,mousePos.x+15,mousePos.y+135);
-			}
-		}
-		if(p == przedmiotyArr[7]){
-			ctx2.fillStyle = "black";
-			ctx2.fillText(p.nazwa,10,160);
-			ctx2.fillRect(265,150,10,10);
-			if(mousePos.x >265 && mousePos.y >150 && mousePos.x <305 && mousePos.y <160 && menu.ekwipunek){
-				if(stopnioweRysowanie1 >= 1){
-				}else{
-					stopnioweRysowanie1 = stopnioweRysowanie1 + 0.1;
-				}
-				ctx2.fillStyle = "rgba(200,200,200,"+stopnioweRysowanie1+")";
-				ctx2.fillRect(mousePos.x+15,mousePos.y+5,250,300);
-				ctx2.fillStyle = "rgba(255,255,255,"+stopnioweRysowanie1+")";
-				ctx2.fillText("Nazwa : "+p.nazwa,mousePos.x+15,mousePos.y+15);
-				ctx2.fillText("Typ : "+p.typ,mousePos.x+15,mousePos.y+30);
-				ctx2.fillText("Opis : "+p.opis,mousePos.x+15,mousePos.y+45);
-				ctx2.fillText("Cena : "+p.cena+" bryłek rudy",mousePos.x+155,mousePos.y+295);
-				ctx2.fillText("Statystyki :",mousePos.x+15,mousePos.y+115);
-				ctx2.fillText("Obrażenia : "+p.cechy[0].obrazeniaMin+"d"+p.cechy[0].obrazeniaMax,mousePos.x+15,mousePos.y+135);
-			}
-		}
-		if(p == przedmiotyArr[6]){
-			ctx2.fillStyle = "black";
-			ctx2.fillText(p.nazwa,10,140);
-			ctx2.fillRect(265,130,10,10);
-			if(mousePos.x >265 && mousePos.y >130 && mousePos.x <305 && mousePos.y <140 && menu.ekwipunek){
-				if(stopnioweRysowanie1 >= 1){
-				}else{
-					stopnioweRysowanie1 = stopnioweRysowanie1 + 0.1;
-				}
-				ctx2.fillStyle = "rgba(200,200,200,"+stopnioweRysowanie1+")";
-				ctx2.fillRect(mousePos.x+15,mousePos.y+5,250,300);
-				ctx2.fillStyle = "rgba(255,255,255,"+stopnioweRysowanie1+")";
-				ctx2.fillText("Nazwa : "+p.nazwa,mousePos.x+15,mousePos.y+15);
-				ctx2.fillText("Typ : "+p.typ,mousePos.x+15,mousePos.y+30);
-				ctx2.fillText("Opis : "+p.opis,mousePos.x+15,mousePos.y+45);
-				ctx2.fillText("Cena : "+p.cena+" bryłek rudy",mousePos.x+155,mousePos.y+295);
-				ctx2.fillText("Statystyki :",mousePos.x+15,mousePos.y+115);
-				ctx2.fillText("Obrażenia : "+p.cechy[0].obrazeniaMin+"d"+p.cechy[0].obrazeniaMax,mousePos.x+15,mousePos.y+135);
-			}
-		}
-		if(p == przedmiotyArr[5]){
-			ctx2.fillStyle = "black";
-			ctx2.fillText(p.nazwa,10,120);
-			ctx2.fillRect(265,110,10,10);
-			if(mousePos.x >265 && mousePos.y >110 && mousePos.x <305 && mousePos.y <120 && menu.ekwipunek){
-				if(stopnioweRysowanie1 >= 1){
-				}else{
-					stopnioweRysowanie1 = stopnioweRysowanie1 + 0.1;
-				}
-				ctx2.fillStyle = "rgba(200,200,200,"+stopnioweRysowanie1+")";
-				ctx2.fillRect(mousePos.x+15,mousePos.y+5,250,300);
-				ctx2.fillStyle = "rgba(255,255,255,"+stopnioweRysowanie1+")";
-				ctx2.fillText("Nazwa : "+p.nazwa,mousePos.x+15,mousePos.y+15);
-				ctx2.fillText("Typ : "+p.typ,mousePos.x+15,mousePos.y+30);
-				ctx2.fillText("Opis : "+p.opis,mousePos.x+15,mousePos.y+45);
-				ctx2.fillText("Cena : "+p.cena+" bryłek rudy",mousePos.x+155,mousePos.y+295);
-				ctx2.fillText("Statystyki :",mousePos.x+15,mousePos.y+115);
-				ctx2.fillText("Obrażenia : "+p.cechy[0].obrazeniaMin+"d"+p.cechy[0].obrazeniaMax,mousePos.x+15,mousePos.y+135);
-			}
-		}
-		if(p == przedmiotyArr[4]){
-			ctx2.fillStyle = "black";
-			ctx2.fillText(p.nazwa,10,100);
-			ctx2.fillRect(265,90,10,10);
-			if(mousePos.x >265 && mousePos.y >90 && mousePos.x <305 && mousePos.y <100 && menu.ekwipunek){
-				if(stopnioweRysowanie1 >= 1){
-				}else{
-					stopnioweRysowanie1 = stopnioweRysowanie1 + 0.1;
-				}
-				ctx2.fillStyle = "rgba(200,200,200,"+stopnioweRysowanie1+")";
-				ctx2.fillRect(mousePos.x+15,mousePos.y+5,250,300);
-				ctx2.fillStyle = "rgba(255,255,255,"+stopnioweRysowanie1+")";
-				ctx2.fillText("Nazwa : "+p.nazwa,mousePos.x+15,mousePos.y+15);
-				ctx2.fillText("Typ : "+p.typ,mousePos.x+15,mousePos.y+30);
-				ctx2.fillText("Opis : "+p.opis,mousePos.x+15,mousePos.y+45);
-				ctx2.fillText("Cena : "+p.cena+" bryłek rudy",mousePos.x+155,mousePos.y+295);
-				ctx2.fillText("Statystyki :",mousePos.x+15,mousePos.y+115);
-				ctx2.fillText("Obrażenia : "+p.cechy[0].obrazeniaMin+"d"+p.cechy[0].obrazeniaMax,mousePos.x+15,mousePos.y+135);
-			}
-		}
-		if(p == przedmiotyArr[3]){
-			ctx2.fillStyle = "black";
-			ctx2.fillText(p.nazwa,10,80);
-			ctx2.fillRect(265,70,10,10);
-			if(mousePos.x >265 && mousePos.y >70 && mousePos.x <305 && mousePos.y <80 && menu.ekwipunek){
-				if(stopnioweRysowanie1 >= 1){
-				}else{
-					stopnioweRysowanie1 = stopnioweRysowanie1 + 0.1;
-				}
-				ctx2.fillStyle = "rgba(200,200,200,"+stopnioweRysowanie1+")";
-				ctx2.fillRect(mousePos.x+15,mousePos.y+5,250,300);
-				ctx2.fillStyle = "rgba(255,255,255,"+stopnioweRysowanie1+")";
-				ctx2.fillText("Nazwa : "+p.nazwa,mousePos.x+15,mousePos.y+15);
-				ctx2.fillText("Typ : "+p.typ,mousePos.x+15,mousePos.y+30);
-				ctx2.fillText("Opis : "+p.opis,mousePos.x+15,mousePos.y+45);
-				ctx2.fillText("Cena : "+p.cena+" bryłek rudy",mousePos.x+155,mousePos.y+295);
-				ctx2.fillText("Statystyki :",mousePos.x+15,mousePos.y+115);
-				ctx2.fillText("Obrażenia : "+p.cechy[0].obrazeniaMin+"d"+p.cechy[0].obrazeniaMax,mousePos.x+15,mousePos.y+135);
-			}
-		}
-		if(p == przedmiotyArr[2]){
-			ctx2.fillStyle = "black";
-			ctx2.fillText(p.nazwa,10,60);
-			ctx2.fillRect(265,50,10,10);
-			if(mousePos.x >265 && mousePos.y >50 && mousePos.x <305 && mousePos.y <60 && menu.ekwipunek){
-				if(stopnioweRysowanie1 >= 1){
-				}else{
-					stopnioweRysowanie1 = stopnioweRysowanie1 + 0.1;
-				}
-				ctx2.fillStyle = "rgba(200,200,200,"+stopnioweRysowanie1+")";
-				ctx2.fillRect(mousePos.x+15,mousePos.y+5,250,300);
-				ctx2.fillStyle = "rgba(255,255,255,"+stopnioweRysowanie1+")";
-				ctx2.fillText("Nazwa : "+p.nazwa,mousePos.x+15,mousePos.y+15);
-				ctx2.fillText("Typ : "+p.typ,mousePos.x+15,mousePos.y+30);
-				ctx2.fillText("Opis : "+p.opis,mousePos.x+15,mousePos.y+45);
-				ctx2.fillText("Cena : "+p.cena+" bryłek rudy",mousePos.x+155,mousePos.y+295);
-				ctx2.fillText("Statystyki :",mousePos.x+15,mousePos.y+115);
-				ctx2.fillText("Obrażenia : "+p.cechy[0].obrazeniaMin+"d"+p.cechy[0].obrazeniaMax,mousePos.x+15,mousePos.y+135);
-			}
-		}
-		if(p == przedmiotyArr[1]){
-			ctx2.fillStyle = "black";
-			ctx2.fillText(p.nazwa,10,40);
-			ctx2.fillRect(265,30,10,10);
-			if(mousePos.x >265 && mousePos.y >30 && mousePos.x <305 && mousePos.y <40 && menu.ekwipunek){
-				if(stopnioweRysowanie1 >= 1){
-				}else{
-					stopnioweRysowanie1 = stopnioweRysowanie1 + 0.1;
-				}
-				ctx2.fillStyle = "rgba(200,200,200,"+stopnioweRysowanie1+")";
-				ctx2.fillRect(mousePos.x+15,mousePos.y+5,250,300);
-				ctx2.fillStyle = "rgba(255,255,255,"+stopnioweRysowanie1+")";
-				ctx2.fillText("Nazwa : "+p.nazwa,mousePos.x+15,mousePos.y+15);
-				ctx2.fillText("Typ : "+p.typ,mousePos.x+15,mousePos.y+30);
-				ctx2.fillText("Opis : "+p.opis,mousePos.x+15,mousePos.y+45);
-				ctx2.fillText("Cena : "+p.cena+" bryłek rudy",mousePos.x+155,mousePos.y+295);
-				ctx2.fillText("Statystyki :",mousePos.x+15,mousePos.y+115);
-				ctx2.fillText("Obrażenia : "+p.cechy[0].obrazeniaMin+"d"+p.cechy[0].obrazeniaMax,mousePos.x+15,mousePos.y+135);
-			}
-		}
-		if(p == przedmiotyArr[0]){
-			ctx2.fillStyle = "black";
-			ctx2.fillText(p.nazwa,10,20);
-			ctx2.fillRect(265,10,10,10);
-			if(mousePos.x >265 && mousePos.y >10 && mousePos.x <275 && mousePos.y <20 && menu.ekwipunek){
-				if(stopnioweRysowanie1 >= 1){
-				}else{
-					stopnioweRysowanie1 = stopnioweRysowanie1 + 0.1;
-				}
-				ctx2.fillStyle = "rgba(200,200,200,"+stopnioweRysowanie1+")";
-				ctx2.fillRect(mousePos.x+15,mousePos.y+5,250,300);
-				ctx2.fillStyle = "rgba(255,255,255,"+stopnioweRysowanie1+")";
-				ctx2.fillText("Nazwa : "+p.nazwa,mousePos.x+15,mousePos.y+15);
-				ctx2.fillText("Typ : "+p.typ,mousePos.x+15,mousePos.y+30);
-				ctx2.fillText("Opis : "+p.opis,mousePos.x+15,mousePos.y+45);
-				ctx2.fillText("Cena : "+p.cena+" bryłek rudy",mousePos.x+155,mousePos.y+295);
-				ctx2.fillText("Statystyki :",mousePos.x+15,mousePos.y+115);
-				ctx2.fillText("Obrażenia : "+p.cechy[0].obrazeniaMin+"d"+p.cechy[0].obrazeniaMax,mousePos.x+15,mousePos.y+135);
-			}
-			
-			
 		}
 		
 	}
-}
+		
+	}
+
 
 
 function ekwipunek(){
@@ -388,29 +129,43 @@ function ekwipunek(){
 	}
 }
 
+function wyswietlanieKonsoli(){
+	ctx.font = "15px Segoe UI"; 
+	ctx.fillStyle = "black";
+	var len = konsolaArr.length;
+	if( len > 7 ){
+		len--;
+		konsolaArr.pop();
+	}
+	for(var i = 0; i < len ; i++){
+		var k = konsolaArr[i];
+		ctx.fillText(konsolaArr[i],10,490 + i * 16);
+		console.log(k,i);
+	}
+}
+
+
 function konsola(text){
 	konsolaArr.unshift(text);
 	ctx.clearRect(0,479,599,118);
 	wyswietlanieKonsoli();
 }
 
-function konsolaBeta(text){
-	
-	
-}
-
 function odswiezanie() {
 	setInterval(function() {
 			ctx2.clearRect(0, 0, 800, 600);
-			mapa();
+			
 			opisy();
 			muzyka();
 			minimapa();
 			interfejsDane();
 			ekwipunek();
-			
+
 			if(menu.ekwipunek){
 				wyswietlanieEkwipunku();
+			}
+			if(menu.interfejs){
+				ikony();
 			}
 	}, 25);
 } 
@@ -437,12 +192,21 @@ function muzyka(){
 }
 
 function minimapa(){
+	
 	if(!menu.glowne && menu.interfejs){	
 		
-		if(!menu.ekwipunek && !menu.statystyki){
+		sx = tempX2- 600;
+		sy = tempY2;
+		
+		var wysokosc = 57.5;
+		var szerokosc = 42.5;
+		var polowaW = wysokosc/2;
+		var polowaS = szerokosc/2
+		
+		if(!menu.ekwipunek && !menu.statystyki && !menu.opcjeGra && !menu.osiagniecia && !menu.dziennik && !menu.czary){
 			ctx2.fillStyle = "red";
-			predkoscPzewijaniaMapy = 1;
-			for (var i = 0; i < 23; i++){
+			predkoscPzewijaniaMapy = 5;
+/* 			for (var i = 0; i < 23; i++){
 				a = (i+1)*25;
 				if(a < 450){
 					ctx2.strokeRect(25,a, 550,0);
@@ -450,7 +214,7 @@ function minimapa(){
 				if(a < 600){
 					ctx2.strokeRect(a,25, 0,400);	
 				}
-			}
+			} */
 			if(mousePos.y < 25 && mousePos.x < 600){
 				tempY2= tempY2 - predkoscPzewijaniaMapy;
 			}
@@ -463,14 +227,15 @@ function minimapa(){
 			if(mousePos.x > 575 && mousePos.x < 600 && mousePos.y < 450){
 				tempX2= tempX2 + predkoscPzewijaniaMapy;
 			}
+			
+			ctx2.drawImage(mapa,sx*5-28.75,sy*5-21.25 ,(57.5)*6,(42.5)*6,25,25,550,400);
+			
 		}
 		
 		
-		var kwa1 = tempX2-600;
-		var wysokosc = 57.5;
-		var szerokosc = 42.5;
-		var polowaW = wysokosc/2;
-		var polowaS = szerokosc/2
+
+		
+		
 		
  		if(tempX2-polowaW > 600 && tempX2+polowaW < 800 && tempY2-polowaS >=0 && tempY2+polowaS <= 200){
 			ctx2.strokeRect(tempX2-polowaW,tempY2-polowaS,wysokosc,szerokosc);
@@ -480,7 +245,7 @@ function minimapa(){
 			ctx2.strokeRect(600,200-szerokosc,wysokosc,szerokosc);
 		}else if(tempX2+polowaW >= 800 && tempY2-polowaS <= 0){
 			ctx2.strokeRect(800-wysokosc,0,wysokosc,szerokosc);
-		}else if(tempX2+polowaW >= 800 && tempY2+polowaS >= 200){
+		}else if(tempX2+polowaW >=800 && tempY2+polowaS >= 200){
 			ctx2.strokeRect(800-wysokosc,200-szerokosc,wysokosc,szerokosc);
 		}else if(tempX2-polowaW <= 600){
 			ctx2.strokeRect(600,tempY2-polowaS,wysokosc,szerokosc);
@@ -494,19 +259,62 @@ function minimapa(){
 	}
 }
 
+function ikony(){
+	
+	if(menu.ekwipunek){
+		ctx2.drawImage(sprite,100, 50, 50, 50, 600, 300, 50, 50);
+	}else if(mousePos.x > 600 && mousePos.x < 650 && mousePos.y > 300 && mousePos.y < 350){
+		ctx2.drawImage(sprite, 50, 50, 50, 50, 600, 300, 50, 50);
+	}else{
+		ctx2.drawImage(sprite, 0, 50, 50, 50, 600, 300, 50, 50);
+	}
+	if(menu.statystyki){
+		ctx2.drawImage(sprite,100, 150, 50, 50, 650, 300, 50, 50);
+	}else if(mousePos.x > 650 && mousePos.x < 700 && mousePos.y > 300 && mousePos.y < 350){
+		ctx2.drawImage(sprite, 50, 150, 50, 50, 650, 300, 50, 50);
+	}else{
+		ctx2.drawImage(sprite, 0, 150, 50, 50, 650, 300, 50, 50);
+	}
+	if(menu.czary){
+		ctx2.drawImage(sprite,100, 100, 50, 50, 700, 300, 50, 50);
+	}else if(mousePos.x > 700 && mousePos.x < 750 && mousePos.y > 300 && mousePos.y < 350){
+		ctx2.drawImage(sprite, 50, 100, 50, 50, 700, 300, 50, 50);
+	}else{
+		ctx2.drawImage(sprite, 0, 100, 50, 50, 700, 300, 50, 50);
+	}
+	if(menu.dziennik){
+		ctx2.drawImage(sprite,100, 200, 50, 50, 750, 300, 50, 50);
+	}else if(mousePos.x > 750 && mousePos.x < 800 && mousePos.y > 300 && mousePos.y < 350){
+		ctx2.drawImage(sprite, 50, 200, 50, 50, 750, 300, 50, 50);
+	}else{
+		ctx2.drawImage(sprite, 0, 200, 50, 50, 750, 300, 50, 50);
+	}
+	if(menu.osiagniecia){
+		ctx2.drawImage(sprite,100, 250, 50, 50, 600, 350, 50, 50);
+	}else if(mousePos.x > 600 && mousePos.x < 650 && mousePos.y > 350 && mousePos.y < 400){
+		ctx2.drawImage(sprite, 50, 250, 50, 50, 600, 350, 50, 50);
+	}else{
+		ctx2.drawImage(sprite, 0, 250, 50, 50, 600, 350, 50, 50);
+	}
+	if(menu.opcjeGra){
+		ctx2.drawImage(sprite,100, 300, 50, 50, 650, 350, 50, 50);
+	}else if(mousePos.x > 650 && mousePos.x < 700 && mousePos.y > 350 && mousePos.y < 400){
+		ctx2.drawImage(sprite, 50, 300, 50, 50, 650, 350, 50, 50);
+	}else{
+		ctx2.drawImage(sprite, 0, 300, 50, 50, 650, 350, 50, 50);
+	}
+}
+
 function przewijanieMapy(){
-	ctx.fillStyle = "rgba(50,50,50,0.1)"; //przezroczystosc
-	ctx.fillRect(0,0,600,25);
-	ctx.fillRect(0,0,25,450);
-	ctx.fillRect(0,425,600,25);
-	ctx.fillRect(575,0,25,450);
+	if(!menu.ekwipunek && !menu.statystyki && !menu.opcjeGra && !menu.osiagniecia && !menu.dziennik && !menu.czary){
+		ctx.fillStyle = "rgba(50,50,50,0.1)"; //przezroczystosc
+		ctx.fillRect(0,0,600,25);
+		ctx.fillRect(0,0,25,450);
+		ctx.fillRect(0,425,600,25);
+		ctx.fillRect(575,0,25,450);
+	}
 	
 }
-
-function mapa(){
-	
-}
-
 
 function musicControl() {
 	
@@ -580,7 +388,6 @@ function wyswietlanieMenu(){
 		ctx.strokeRect(600,300,200,100);
 		ctx.strokeRect(750,250,50,50);
 		ctx.strokeRect(0,450,600,150);
-		ctx.strokeRect(600,300,50,50);ctx.fillText("Ekwipunek",600,325);
 		ctx.strokeRect(650,300,50,50);ctx.fillText("Statystyki",650,325);
 		ctx.strokeRect(700,300,50,50);ctx.fillText("czary",700,325);
 		ctx.strokeRect(750,300,50,50);ctx.fillText("dziennik",750,325);
@@ -589,6 +396,7 @@ function wyswietlanieMenu(){
 		if(!menu.ekwipunek && !menu.statystyki){
 			przewijanieMapy();
 		}
+		ctx.drawImage(mapa,0,0,1150,850,600,0,200,200);
 	}
 	if(menu.wielo){
 		ctx.fillText("Coming soon ^^",300,200);
@@ -627,6 +435,22 @@ function wyswietlanieMenu(){
 		ctx.fillText("Broń dwuręczna : "+postac[0].uMiecz2,400,90);
 		ctx.fillText("Łuk : "+postac[0].uLuk,400,110);
 		ctx.fillText("Kusza : "+postac[0].uKusza,400,130);
+	}
+	if(menu.czary){
+		ctx.strokeRect(0,0,300,450);
+		ctx.strokeRect(300,0,300,450);
+	}
+	if(menu.dziennik){
+		ctx.strokeRect(0,0,300,450);
+		ctx.strokeRect(300,0,300,450);
+	}
+	if(menu.osiagniecia){
+		ctx.strokeRect(0,0,300,450);
+		ctx.strokeRect(300,0,300,450);
+	}
+	if(menu.opcjeGra){
+		ctx.strokeRect(0,0,300,450);
+		ctx.strokeRect(300,0,300,450);
 	}
 	
 	

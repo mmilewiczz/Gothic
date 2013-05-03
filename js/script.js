@@ -1,6 +1,7 @@
 var menu = {
 	glowne: true,
 	opcje: false,
+	opcjeGra: false,
 	wczytaj: false,
 	nowa: false,
 	wielo: false,
@@ -8,6 +9,8 @@ var menu = {
 	bg: true,
 	statystyki:false,
 	ekwipunek:false,
+	osiagniecia:false,
+	
 
 }
 
@@ -19,19 +22,23 @@ tempX = 500,
 tempX2 = 700,
 tempY2 = 100,
 tempX3 = 0,
+on = false,
 stopnioweRysowanie = 0,
 stopnioweRysowanie1 = 0,
 konsolaWpisywanie = [ ],
 clicked,
 canvas2,
 ctx2,
+obozIndex,
 ctx,
 musicOn = false,
 mousePos = {x:null,y:null};
 var bg = new Image(0,0);
 bg.src = 'img/bg.jpg';
-sprite = new Image(1000,1000);
+sprite = new Image(500,1000);
 sprite.src = 'img/sprite.png';
+mapa = new Image(1000,1000);
+mapa.src = 'img/mapa.png';
 
 
 audio0 = new Audio('mp3/gothic0.mp3');  
@@ -62,6 +69,7 @@ function LetsBegin(){
 	
 	wyswietlanieMenu();
 	odswiezanie();
+	odswiezanie1();
 	musicControl();
 	function myDown(evt){
 		var obj = canvas2;
@@ -164,21 +172,63 @@ function LetsBegin(){
 			tempY2 = mousePos.y;
 			clicked = true;
 		}
-		if(mouseX >600 && mouseY >300 && mouseX <650 && mouseY <350 && !menu.glowne && menu.interfejs && !menu.ekwipunek && !menu.statystyki){
+		if(mouseX >600 && mouseY >300 && mouseX <650 && mouseY <350 && !menu.glowne && menu.interfejs && !menu.ekwipunek && !menu.statystyki && !menu.opcjeGra && !menu.osiagniecia && !menu.czary && !menu.dziennik && !menu.czary && !menu.dziennik){
+			menu.clicked = true;
 			menu.ekwipunek = true;
 			wyswietlanieMenu();
 		}else if(mouseX >600 && mouseY >300 && mouseX <650 && mouseY <350 && !menu.glowne && menu.interfejs && menu.ekwipunek && !menu.statystyki){
 			menu.ekwipunek = false;
+			menu.clicked = false;
 			wyswietlanieMenu();
 		}
-		if(mouseX >650 && mouseY >300 && mouseX <700&& mouseY <350 && !menu.glowne && menu.interfejs && !menu.statystyki && !menu.ekwipunek){
+		if(mouseX >650 && mouseY >300 && mouseX <700&& mouseY <350 && !menu.glowne && menu.interfejs && !menu.statystyki && !menu.ekwipunek && !menu.opcjeGra && !menu.osiagniecia && !menu.czary && !menu.dziennik){
 			menu.statystyki = true;
 			wyswietlanieMenu();
 		}else if(mouseX >650 && mouseY >300 && mouseX <700 && mouseY <350 && !menu.glowne && menu.interfejs && menu.statystyki && !menu.ekwipunek){
 			menu.statystyki = false;
 			wyswietlanieMenu();
 		}
+		if(mouseX > 700 && mouseX < 750 && mouseY > 300 && mouseY < 350 && menu.interfejs && !menu.statystyki && !menu.ekwipunek && !menu.czary && !menu.opcjeGra && !menu.osiagniecia && !menu.czary && !menu.dziennik){
+			menu.czary = true;
+			menu.clicked = true;
+			wyswietlanieMenu();
+		}else if(mouseX > 700 && mouseX < 750 && mouseY > 300 && mouseY < 350 && menu.interfejs && !menu.statystyki && !menu.ekwipunek){
+			menu.czary = false;
+			menu.clicked = false;
+			wyswietlanieMenu();
+		}
+		if(mouseX > 750 && mouseX < 800 && mouseY > 300 && mouseY < 350 && menu.interfejs && !menu.statystyki && !menu.ekwipunek && !menu.dziennik && !menu.opcjeGra && !menu.osiagniecia && !menu.czary && !menu.dziennik){
+			menu.dziennik = true;
+			menu.clicked = true;
+			wyswietlanieMenu();
+		}else if(mouseX > 750 && mouseX < 800 && mouseY > 300 && mouseY < 350 && menu.interfejs && !menu.statystyki && !menu.ekwipunek){
+			menu.dziennik = false;
+			menu.clicked = false;
+			wyswietlanieMenu();
+		}
+		if(mouseX > 600 && mouseX < 650 && mouseY > 350 && mouseY < 400 && menu.interfejs && !menu.statystyki && !menu.ekwipunek  && !menu.opcjeGra && !menu.osiagniecia && !menu.czary && !menu.dziennik){
+			menu.osiagniecia = true;
+			menu.clicked = true;
+			wyswietlanieMenu();
+		}else if(mouseX > 600 && mouseX < 650 && mouseY > 350 && mouseY < 400 && menu.interfejs && !menu.statystyki && !menu.ekwipunek){
+			menu.osiagniecia = false;
+			menu.clicked = false;
+			wyswietlanieMenu();
+		}
+		if(mouseX > 650 && mouseX < 700 && mouseY > 350 && mouseY < 400 && menu.interfejs && !menu.statystyki && !menu.ekwipunek && !menu.opcjeGra && !menu.osiagniecia && !menu.czary && !menu.dziennik){
+			menu.opcjeGra = true;
+			menu.clicked = true;
+			wyswietlanieMenu();
+		}else if(mouseX > 650 && mouseX < 700 && mouseY > 350 && mouseY < 400 && menu.interfejs && !menu.statystyki && !menu.ekwipunek){
+			menu.opcjeGra = false;
+			menu.clicked = false;
+			wyswietlanieMenu();
+		}
+		
 	}
+		
+	
+
 	
 	function mousemove(evt) {
 		var top = 0;
@@ -194,8 +244,7 @@ function LetsBegin(){
 		if(mouseX >600 && mouseY >0 && mouseX <800 && mouseY <200 && !menu.glowne && menu.interfejs && clicked && !menu.statystyki && !menu.ekwipunek){
 			tempX2 = mousePos.x;
 			tempY2 = mousePos.y;
-		}
-		
+		}	
 		
 	}
 	
@@ -236,7 +285,7 @@ anim.src = 'anim.png'; */
 var nr_klatki = 1;
 var liczba_klatek_anim = 8;
 var szerokosc_klatki = 401/ liczba_klatek_anim;
-var wysokosc_klatki = sprite.height;0
+var wysokosc_klatki = 50;
 
 function draw(){
 	
@@ -246,14 +295,16 @@ function draw(){
 	}
 	
 	var xklatki = (nr_klatki-1)*szerokosc_klatki;
-	ctx1.drawImage(sprite, xklatki, 0, szerokosc_klatki, wysokosc_klatki, 500, 50, szerokosc_klatki, wysokosc_klatki);  
+	ctx1.drawImage(sprite, xklatki, 0, szerokosc_klatki, wysokosc_klatki, 750, 250, szerokosc_klatki, wysokosc_klatki);  
 	
 }
 
 function odswiezanie1() {
 	setInterval(function() {
 			ctx1.clearRect(0, 0, 800, 600);
-			draw();
+			if(menu.interfejs){
+				draw();
+			}
 	},100);
 } 
    
