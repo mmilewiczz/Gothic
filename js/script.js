@@ -2,6 +2,7 @@ var menu = {
 	glowne: true,
 	opcje: false,
 	opcjeGra: false,
+	muzyka:false,
 	wczytaj: false,
 	nowa: false,
 	wielo: false,
@@ -10,6 +11,11 @@ var menu = {
 	statystyki:false,
 	ekwipunek:false,
 	osiagniecia:false,
+	konsola:false,
+	clicked:false,
+	przewijanie: false,
+	muzykaGra: false,
+	
 	
 
 }
@@ -22,10 +28,11 @@ tempX = 500,
 tempX2 = 700,
 tempY2 = 100,
 tempX3 = 0,
+tempX4 = 305,
 on = false,
 stopnioweRysowanie = 0,
 stopnioweRysowanie1 = 0,
-konsolaWpisywanie = [ ],
+konsolaWpisywanie = [""],
 clicked,
 canvas2,
 ctx2,
@@ -33,39 +40,45 @@ obozIndex,
 ctx,
 musicOn = false,
 mousePos = {x:null,y:null};
-var bg = new Image(0,0);
-bg.src = 'img/bg.jpg';
+/* var bg = new Image(0,0);
+bg.src = 'img/bg.jpg'; */
 sprite = new Image(500,1000);
 sprite.src = 'img/sprite.png';
 mapa = new Image(1000,1000);
 mapa.src = 'img/mapa.png';
+bgs = new Image(2000,2000);
+bgs.src = 'img/bg.png';
+
 
 
 audio0 = new Audio('mp3/gothic0.mp3');  
 
-activeAudio = audio0;
+ activeAudio = audio0;
 
 audio0.addEventListener('ended', function() {
 		activeAudio = audio0;
 		activeAudio.currentTime = 0;
 		activeAudio.play();
 }, false);    
-
-  
+ 
+   
 
 function LetsBegin(){ 
-	canvas = document.getElementById('example');
-	canvas1 = document.getElementById('example2');
-	canvas2 = document.getElementById('example1');
-	if (canvas.getContext) {
-		ctx = canvas.getContext('2d');
-	}
-	if (canvas2.getContext) {
-		ctx2 = canvas2.getContext('2d');
-	}
-	if (canvas1.getContext) {
-		ctx1 = canvas1.getContext('2d');
-	}
+
+		canvas = document.getElementById('example');
+		canvas1 = document.getElementById('example2');
+		canvas2 = document.getElementById('example1');
+		
+		if (canvas.getContext) {
+			ctx = canvas.getContext('2d');
+		}
+		if (canvas2.getContext) {
+			ctx2 = canvas2.getContext('2d');
+		}
+		if (canvas1.getContext) {
+			ctx1 = canvas1.getContext('2d');
+		}
+	
 	
 	wyswietlanieMenu();
 	odswiezanie();
@@ -83,11 +96,68 @@ function LetsBegin(){
 		
 		var mouseX = evt.clientX - left + window.pageXOffset; 
 		var mouseY = evt.clientY - top + window.pageYOffset; 
-		if (mouseX >335 && mouseY >75 && mouseX <455 && mouseY <105 && menu.glowne){
+
+		if(mouseX >429 && mouseY >175 && mouseX <531 && mouseY <205 && !menu.glowne && menu.opcje && !menu.statystyki && !menu.ekwipunek){
+			tempX = mousePos.x; 
+			clicked = true;
+		}
+		
+		if(mouseX >235 && mouseY >85 && mouseX <335 && mouseY <105 && !menu.glowne && menu.muzyka){
+			tempX4 = mousePos.x; 
+			clicked = true;
+		}
+
+		if(mouseX >600 && mouseY >0 && mouseX <800 && mouseY <200 && !menu.glowne && menu.interfejs &&!menu.ekwipunek && !menu.statystyki && !menu.opcjeGra && !menu.osiagniecia && !menu.dziennik && !menu.czary){
+			tempX2 = mousePos.x;
+			tempY2 = mousePos.y;
+			clicked = true;
+		}
+		
+	}
+		
+	
+
+	
+	function mousemove(evt) {
+		var top = 0;
+		var left = 0;
+		
+		var mouseX = evt.pageX;
+		var mouseY = evt.pageY; 
+		mousePos.x = mouseX;
+		mousePos.y = mouseY;
+		if(mouseX >429 && mouseY >175 && mouseX <531 && mouseY <205 && !menu.glowne && menu.opcje && clicked &&!menu.ekwipunek && !menu.statystyki && !menu.opcjeGra && !menu.osiagniecia && !menu.dziennik && !menu.czary){
+			tempX = mousePos.x; 
+		}
+		if(mouseX >600 && mouseY >0 && mouseX <800 && mouseY <200 && !menu.glowne && menu.interfejs && clicked &&!menu.ekwipunek && !menu.statystyki && !menu.opcjeGra && !menu.osiagniecia && !menu.dziennik && !menu.czary){
+			tempX2 = mousePos.x;
+			tempY2 = mousePos.y;
+		}
+		if(mouseX >=235 && mouseY >=85 && mouseX<=335 && mouseY <=105 && !menu.glowne && menu.muzyka && clicked){
+			tempX4 = mousePos.x; 
+		}
+		
+	}
+	
+	function myUp(evt){
+		var top = 0;
+		var left = 0;
+		
+		var mouseX = evt.pageX;
+		var mouseY = evt.pageY; 
+		mousePos.x = mouseX;
+		mousePos.y = mouseY;
+		clicked = false;
+		if (mouseX >335 && mouseY >275 && mouseX <455 && mouseY <305 && menu.glowne){
 			menu.glowne = false;
 			menu.nowa = true;
 			wyswietlanieMenu();
-		}else if(mouseX >335 && mouseY >75 && mouseX <455 && mouseY <105 && menu.nowa && !menu.opcje && !menu.glowne && !menu.wczytaj ){
+		}else if (mouseX >335 && mouseY >275 && mouseX <415 && mouseY <305 && !menu.glowne && menu.nowa){
+			menu.glowne = true;
+			menu.nowa = false;
+			wyswietlanieMenu();
+		}
+		if(mouseX >335 && mouseY >75 && mouseX <455 && mouseY <105 && menu.nowa && !menu.opcje && !menu.glowne && !menu.wczytaj ){
 			 postac = obozy[0].cechy;
 			 obliczanieMaxHp();
 			 obliczanieMaxMp();
@@ -95,6 +165,9 @@ function LetsBegin(){
 			 menu.interfejs = true;
 			 menu.bg = false;
 			 wyswietlanieMenu();
+			 konsola("M - On/Off Muzyka");
+			 konsola("Enjoy it !");
+			 konsola("Witaj w Gothic ! : )");
 
 		}
 		if(mouseX >335 && mouseY >125 && mouseX <455 && mouseY <155 && menu.nowa && !menu.opcje && !menu.glowne && !menu.wczytaj ){
@@ -105,6 +178,9 @@ function LetsBegin(){
 			 menu.interfejs = true;
 			 menu.bg = false;
 			 wyswietlanieMenu();
+			 konsola("M - On/Off Muzyka");
+			 konsola("Enjoy it !");
+			 konsola("Witaj w Gothic ! : )");
 		}
 		if(mouseX >335 && mouseY >175 && mouseX <455 && mouseY <205 && menu.nowa && !menu.opcje && !menu.glowne && !menu.wczytaj ){
 			 postac = obozy[2].cechy;
@@ -114,18 +190,21 @@ function LetsBegin(){
 			 menu.interfejs = true;
 			 menu.bg = false;
 			 wyswietlanieMenu();
+			 konsola("M - On/Off Muzyka");
+			 konsola("Enjoy it !");
+			 konsola("Witaj w Gothic ! : )");
 		}
-		if (mouseX >325 && mouseY >110 && mouseX <465 && mouseY <140 && menu.glowne){
+		if (mouseX >325 && mouseY >310 && mouseX <465 && mouseY <340 && menu.glowne){
 			menu.glowne = false;
 			menu.wczytaj = true;
 			wyswietlanieMenu();
 		}
-		if (mouseX >285 && mouseY >145 && mouseX <505 && mouseY <175 && menu.glowne){
+		if (mouseX >285 && mouseY >345 && mouseX <505 && mouseY <375 && menu.glowne){
 			menu.glowne = false;
 			menu.wielo = true;
 			wyswietlanieMenu();
 		}
-		if (mouseX >355 && mouseY >180 && mouseX <430 && mouseY <210 && menu.glowne){
+		if (mouseX >355 && mouseY >380 && mouseX <430 && mouseY <410 && menu.glowne){
 			menu.glowne = false;
 			menu.opcje = true;
 			wyswietlanieMenu();
@@ -145,11 +224,7 @@ function LetsBegin(){
 			menu.wczytaj = false;
 			wyswietlanieMenu();
 		}
-		if (mouseX >335 && mouseY >275 && mouseX <415 && mouseY <305 && !menu.glowne && menu.nowa){
-			menu.glowne = true;
-			menu.nowa = false;
-			wyswietlanieMenu();
-		}
+
 		if(mouseX >325 && mouseY >125 && mouseX <465 && mouseY <155 && menu.nowa && !menu.opcje && !menu.glowne && !menu.wczytaj){
 			postac = obozy[1].cechy;
 			menu.nowa = false;
@@ -162,94 +237,74 @@ function LetsBegin(){
 			menu.interfejs = true;
 			wyswietlanieMenu();
 		}
-		if(mouseX >429 && mouseY >175 && mouseX <531 && mouseY <205 && !menu.glowne && menu.opcje && !menu.statystyki && !menu.ekwipunek){
-			tempX = mousePos.x; 
-			tempY = mousePos.y;
-			clicked = true;
-		}	
-		if(mouseX >600 && mouseY >0 && mouseX <800 && mouseY <200 && !menu.glowne && menu.interfejs && !menu.statystyki && !menu.ekwipunek){
-			tempX2 = mousePos.x;
-			tempY2 = mousePos.y;
-			clicked = true;
+		if(mouseX >30 && mouseY >140 && mouseX <200 && mouseY <150 && !menu.glowne && menu.opcjeGra && !menu.muzykaGra){
+			menu.przewijanie = false;
+			menu.muzykaGra = true;
+		}
+		if(mouseX >30 && mouseY >85 && mouseX <200 && mouseY <125 && !menu.glowne && menu.opcjeGra && !menu.przewijanie){
+			menu.muzykaGra = false;
+			menu.przewijanie = true;
 		}
 		if(mouseX >600 && mouseY >300 && mouseX <650 && mouseY <350 && !menu.glowne && menu.interfejs && !menu.ekwipunek && !menu.statystyki && !menu.opcjeGra && !menu.osiagniecia && !menu.czary && !menu.dziennik && !menu.czary && !menu.dziennik){
 			menu.clicked = true;
 			menu.ekwipunek = true;
 			wyswietlanieMenu();
 		}else if(mouseX >600 && mouseY >300 && mouseX <650 && mouseY <350 && !menu.glowne && menu.interfejs && menu.ekwipunek && !menu.statystyki){
+			wyswietlanieMenu();
 			menu.ekwipunek = false;
 			menu.clicked = false;
-			wyswietlanieMenu();
+			
 		}
 		if(mouseX >650 && mouseY >300 && mouseX <700&& mouseY <350 && !menu.glowne && menu.interfejs && !menu.statystyki && !menu.ekwipunek && !menu.opcjeGra && !menu.osiagniecia && !menu.czary && !menu.dziennik){
 			menu.statystyki = true;
+			menu.clicked = true;
 			wyswietlanieMenu();
 		}else if(mouseX >650 && mouseY >300 && mouseX <700 && mouseY <350 && !menu.glowne && menu.interfejs && menu.statystyki && !menu.ekwipunek){
-			menu.statystyki = false;
 			wyswietlanieMenu();
+			menu.statystyki = false;
+			menu.clicked = false;
+			
 		}
 		if(mouseX > 700 && mouseX < 750 && mouseY > 300 && mouseY < 350 && menu.interfejs && !menu.statystyki && !menu.ekwipunek && !menu.czary && !menu.opcjeGra && !menu.osiagniecia && !menu.czary && !menu.dziennik){
 			menu.czary = true;
 			menu.clicked = true;
 			wyswietlanieMenu();
 		}else if(mouseX > 700 && mouseX < 750 && mouseY > 300 && mouseY < 350 && menu.interfejs && !menu.statystyki && !menu.ekwipunek){
+			wyswietlanieMenu();
 			menu.czary = false;
 			menu.clicked = false;
-			wyswietlanieMenu();
+			
 		}
 		if(mouseX > 750 && mouseX < 800 && mouseY > 300 && mouseY < 350 && menu.interfejs && !menu.statystyki && !menu.ekwipunek && !menu.dziennik && !menu.opcjeGra && !menu.osiagniecia && !menu.czary && !menu.dziennik){
 			menu.dziennik = true;
 			menu.clicked = true;
 			wyswietlanieMenu();
 		}else if(mouseX > 750 && mouseX < 800 && mouseY > 300 && mouseY < 350 && menu.interfejs && !menu.statystyki && !menu.ekwipunek){
+			wyswietlanieMenu();
 			menu.dziennik = false;
 			menu.clicked = false;
-			wyswietlanieMenu();
+			
 		}
 		if(mouseX > 600 && mouseX < 650 && mouseY > 350 && mouseY < 400 && menu.interfejs && !menu.statystyki && !menu.ekwipunek  && !menu.opcjeGra && !menu.osiagniecia && !menu.czary && !menu.dziennik){
 			menu.osiagniecia = true;
 			menu.clicked = true;
 			wyswietlanieMenu();
 		}else if(mouseX > 600 && mouseX < 650 && mouseY > 350 && mouseY < 400 && menu.interfejs && !menu.statystyki && !menu.ekwipunek){
+			wyswietlanieMenu();
 			menu.osiagniecia = false;
 			menu.clicked = false;
-			wyswietlanieMenu();
 		}
 		if(mouseX > 650 && mouseX < 700 && mouseY > 350 && mouseY < 400 && menu.interfejs && !menu.statystyki && !menu.ekwipunek && !menu.opcjeGra && !menu.osiagniecia && !menu.czary && !menu.dziennik){
 			menu.opcjeGra = true;
 			menu.clicked = true;
 			wyswietlanieMenu();
 		}else if(mouseX > 650 && mouseX < 700 && mouseY > 350 && mouseY < 400 && menu.interfejs && !menu.statystyki && !menu.ekwipunek){
+			wyswietlanieMenu();
 			menu.opcjeGra = false;
 			menu.clicked = false;
-			wyswietlanieMenu();
+			
 		}
 		
-	}
-		
-	
-
-	
-	function mousemove(evt) {
-		var top = 0;
-		var left = 0;
-		
-		var mouseX = evt.pageX;
-		var mouseY = evt.pageY; 
-		mousePos.x = mouseX;
-		mousePos.y = mouseY;
-		if(mouseX >429 && mouseY >175 && mouseX <531 && mouseY <205 && !menu.glowne && menu.opcje && clicked && !menu.statystyki && !menu.ekwipunek){
-			tempX = mousePos.x; 
-		}
-		if(mouseX >600 && mouseY >0 && mouseX <800 && mouseY <200 && !menu.glowne && menu.interfejs && clicked && !menu.statystyki && !menu.ekwipunek){
-			tempX2 = mousePos.x;
-			tempY2 = mousePos.y;
-		}	
-		
-	}
-	
-	function myUp(){
-		clicked = false;
 	}
 	canvas2.onmousemove = mousemove;
 	canvas2.onmousedown = myDown; 
@@ -261,7 +316,7 @@ function zapisStanuGry(){
 	
 	localStorage.setItem('arraySave', JSON.stringify({
 			zMenu: menu,
-			zPostac: postac,
+			zPostsac: postac,
 	}));
 	
 }
@@ -273,10 +328,8 @@ function wczytanieStanuGry(){
 }
 
 function pisanie(literka){
-	
-	w = konsolaWpisywanie.unshift(literka);
-	ctx.fillText(konsolaWpisywanie[0],0,500);
-	
+	console.log(literka);
+	//konsolaWpisywanie[0].join()+literka;
 }
 
 /* var anim = new Image(126,32);
@@ -308,6 +361,7 @@ function odswiezanie1() {
 	},100);
 } 
    
+
 
 
 
