@@ -92,42 +92,172 @@ function opisy(){
 function wyswietlanieEkwipunku(){
 	
 	if(menu.ekwipunek){
-		for(i = 0; i < przedmiotyArr.length; i++){
+		var pzLength = przedmiotyZalozone.length,
+		pALength = przedmiotyArr.length;
+		for(i = 0; i <= pzLength; i++){
+			var pz = przedmiotyZalozone[i];
+			
+			if(pz){
+				ctx2.font = "15px rockwell";		
+				ctx2.fillStyle = "rgb(198,170,123)";
+				ctx2.fillText(pz.nazwa,310,60 + i * 25);
+				ctx2.drawImage(sprite, 100, 740, 50, 50, 525,45 + i * 25, 25,25);
+				if(mousePos.x > 500 && mousePos.x < 525 && mousePos.y > 45 + i * 25 && mousePos.y < 65 + i * 25){
+					ctx2.drawImage(sprite, 0, 790, 50, 50, 500, 45 + i * 25, 25, 25);
+				}else{
+					ctx2.drawImage(sprite, 450, 740, 50, 50, 500, 45 + i * 25, 25, 25);
+				}
+			}
+		}
+		
+		for(i = 0; i < pALength; i++){
 			var p = przedmiotyArr[i];
-			for(var j = 0; j < przedmiotyArr.length ; j++){
-				if(p){
-					ctx2.fillStyle = "rgb(198,170,123)";
-					ctx2.fillText(p.nazwa,50,60 + i * 20);
-					ctx2.fillRect(265,50 + i * 20,10,10);
-					
-					
-				}
-				if(mousePos.x >265 && mousePos.y >50 + i * 20 && mousePos.x <275 && mousePos.y <60 + i * 20 && menu.ekwipunek ){
-					if(stopnioweRysowanie1 >= 1){
+			
+			
+			if(p){
+				ctx2.font = "15px rockwell";		
+				ctx2.fillStyle = "rgb(198,170,123)";
+				ctx2.fillText(p.nazwa,50,60 + i * 25);
+				//ctx2.fillRect(265,50 + i * 20,10,10);
+				ctx2.drawImage(sprite, 100, 740, 50, 50, 265,45 + i * 25, 25,25);
+				if(mousePos.x > 240 && mousePos.x < 265 && mousePos.y > 45 + i * 25 && mousePos.y < 65 + i * 25){
+					if(clicked && menu.sklep){
+						ctx2.drawImage(sprite, 250, 740, 50, 50, 240, 45 + i * 25, 25, 25);
+					}else if(clicked && !menu.sklep){
+						ctx2.drawImage(sprite, 200, 790, 50, 50, 240, 45 + i * 25, 25, 25);
+					}else if(menu.sklep){
+						ctx2.drawImage(sprite, 200, 740, 50, 50, 240, 45 + i * 25, 25, 25);
 					}else{
-						stopnioweRysowanie1 = stopnioweRysowanie1 + 0.1;
-					} 
-					ctx2.fillStyle = "rgba(200,200,200,"+stopnioweRysowanie1+")";
-					ctx2.fillRect(mousePos.x+15,mousePos.y+5,250,300);
-					ctx2.fillStyle = "rgba(255,255,255,"+stopnioweRysowanie1+")";
-					ctx2.fillText("Nazwa : "+p.nazwa,mousePos.x+15,mousePos.y+15);
-					ctx2.fillText("Typ : "+p.typ,mousePos.x+15,mousePos.y+30);
-					ctx2.fillText("Opis : "+p.opis,mousePos.x+15,mousePos.y+45);
-					ctx2.fillText("Cena : "+p.cena+" bryłek rudy",mousePos.x+155,mousePos.y+295);
-					ctx2.fillText("Statystyki :",mousePos.x+15,mousePos.y+115);
-					ctx2.fillText("Obrażenia : "+p.cechy[0].obrazeniaMin+"d"+p.cechy[0].obrazeniaMax,mousePos.x+15,mousePos.y+135);
+						ctx2.drawImage(sprite, 150, 790, 50, 50, 240, 45 + i * 25, 25, 25);
+					}
+				}else{
+					if(menu.sklep){
+						ctx2.drawImage(sprite, 150, 740, 50, 50, 240, 45 + i * 25, 25, 25);
+					}else{
+						ctx2.drawImage(sprite, 100, 790, 50, 50, 240, 45 + i * 25, 25, 25);	
+					}
 				}
+				if(mousePos.x >= 215 && mousePos.x <= 240 && mousePos.y >= 45 + i * 25 && mousePos.y <= 65 + i * 25){
+					ctx2.drawImage(sprite, 350, 740, 50, 50, 215, 45 + i * 25, 25, 25);
+				}else{
+					ctx2.drawImage(sprite, 300, 740, 50, 50, 215, 45 + i * 25, 25, 25);
+				}
+				
+			}
+		}
+		for(i = 0; i <= pzLength; i++){
+			var pz = przedmiotyZalozone[i];
+			
+			if(pz){
+				
+				if(mousePos.x >=525 && mousePos.y >=45 + i * 25 && mousePos.x <=550 && mousePos.y <=70 + i * 25 ){
+					pz.aktywny = true;
+					
+				}else{
+					pz.aktywny = false;
+					pz.stopnioweRysowanie1 = 0;
+				}
+				if(pz.aktywny){
+					
+					ctx2.drawImage(bgs, 600, 900, 320, 239, mousePos.x-20-250,mousePos.y-20,250, 300);
+					var myImgData = ctx2.getImageData(mousePos.x-20-250,mousePos.y-20,250, 300)
+					var data = myImgData.data;
+					for (j=0; j<myImgData.data.length; j+=4) {
+						myImgData.data[j+3] = pz.stopnioweRysowanie1;
+					}
+					ctx2.font = "12px rockwell";		
+					ctx2.putImageData(myImgData, mousePos.x-20-250,mousePos.y-20);
+					ctx2.fillStyle = "rgba(198,170,123,"+pz.stopnioweRysowanie1/200+")";
+					ctx2.fillText("Nazwa : "+pz.nazwa,mousePos.x+10-250,mousePos.y+20);
+					ctx2.fillText("Typ : "+pz.typ,mousePos.x+10-250,mousePos.y+35);
+					if(pz.typ == "Broń" || pz.typ == "Broń Dystansowa"){
+						ctx2.fillText("Obrażenia : "+pz.cechy[0].obrazeniaMin+"d"+pz.cechy[0].obrazeniaMax,mousePos.x-10-230,mousePos.y+55);
+						ctx2.fillText("Dodatkowe : "+pz.dodatkowe,mousePos.x+10-250,mousePos.y+75);
+					}else if(pz.typ == "Zbroja"){
+						ctx2.fillText("Obrona : "+pz.cechy[0].obrona,mousePos.x+10-250,mousePos.y+55);
+						ctx2.fillText("Obrona magiczna : "+pz.cechy[0].obronaM,mousePos.x+10-250,mousePos.y+70);
+						ctx2.fillText("Obrona przeciw pociskom : "+pz.cechy[0].obronaP,mousePos.x+10-250,mousePos.y+85);
+						ctx2.fillText("Dodatkowe : "+pz.dodatkowe,mousePos.x+10-250,mousePos.y+105);
+					}else if(pz.typ == "Mikstura Życia"){
+						ctx2.fillText("Odnawia punktów życia : "+pz.cechy[0].wartoscHp,mousePos.x+10-250,mousePos.y+55);
+					}else if(pz.typ == "Mikstura Many"){
+						ctx2.fillText("Odnawia punktów many : "+pz.cechy[0].wartoscMp,mousePos.x+10-250,mousePos.y+55);
+					}else if(pz.typ == "Pierścień"){
+						ctx2.fillText("Dodatkowe : "+pz.dodatkowe,mousePos.x+10-250,mousePos.y+55);
+					}
+					ctx2.fillText("Cena : "+pz.cena+" bryłek rudy",mousePos.x+15-250,mousePos.y+250);
+					if(pz.stopnioweRysowanie1 >= 255){
+					}else{
+						pz.stopnioweRysowanie1 = pz.stopnioweRysowanie1 + 15;
+					} 
+					
+				}
+			}
+		}
+		
+		for(i = 0; i < pALength; i++){
+			var p = przedmiotyArr[i];
+			
+			if(mousePos.x >=265 && mousePos.y >=45 + i * 25 && mousePos.x <=290 && mousePos.y <=70 + i * 25 ){
+				p.aktywny = true;
+				
+			}else{
+				p.aktywny = false;
+				p.stopnioweRysowanie1 = 0;
+			}
+			if(p.aktywny){
+				
+				if(p.stopnioweRysowanie1 >= 255){
+				}else{
+					p.stopnioweRysowanie1 = p.stopnioweRysowanie1 + 15;
+				} 
+				ctx2.drawImage(bgs, 600, 900, 320, 239, mousePos.x+20,mousePos.y-20, 250, 300);
+				var myImgData = ctx2.getImageData(mousePos.x+20,mousePos.y-20,250, 300)
+				var data = myImgData.data;
+				for (j=0; j<myImgData.data.length; j+=4) {
+					myImgData.data[j+3] = p.stopnioweRysowanie1;
+				} 
+				
+				ctx2.font = "12px rockwell";		
+				ctx2.putImageData(myImgData, mousePos.x+20,mousePos.y-20);
+				ctx2.fillStyle = "rgba(198,170,123,"+p.stopnioweRysowanie1/200+")";
+				ctx2.fillText("Nazwa : "+p.nazwa,mousePos.x+45,mousePos.y+20);
+				ctx2.fillText("Typ : "+p.typ,mousePos.x+45,mousePos.y+35);
+				if(p.typ == "Broń" || p.typ == "Broń Dystansowa"){
+					ctx2.fillText("Obrażenia : "+p.cechy[0].obrazeniaMin+"d"+p.cechy[0].obrazeniaMax,mousePos.x+45,mousePos.y+55);
+					ctx2.fillText("Dodatkowe : "+p.dodatkowe,mousePos.x+45,mousePos.y+75);
+				}else if(p.typ == "Zbroja"){
+					ctx2.fillText("Obrona : "+p.cechy[0].obrona,mousePos.x+45,mousePos.y+55);
+					ctx2.fillText("Obrona magiczna : "+p.cechy[0].obronaM,mousePos.x+45,mousePos.y+70);
+					ctx2.fillText("Obrona przeciw pociskom : "+p.cechy[0].obronaP,mousePos.x+45,mousePos.y+85);
+					ctx2.fillText("Dodatkowe : "+p.dodatkowe,mousePos.x+45,mousePos.y+105);
+				}else if(p.typ == "Mikstura Życia"){
+					ctx2.fillText("Odnawia punktów życia : "+p.cechy[0].wartoscHp,mousePos.x+45,mousePos.y+55);
+				}else if(p.typ == "Mikstura Many"){
+					ctx2.fillText("Odnawia punktów many : "+p.cechy[0].wartoscMp,mousePos.x+45,mousePos.y+55);
+				}else if(p.typ == "Pierścień"){
+					ctx2.fillText("Dodatkowe : "+p.dodatkowe,mousePos.x+45,mousePos.y+55);
+				}
+				ctx2.fillText("Cena : "+p.cena+" bryłek rudy",mousePos.x+55,mousePos.y+250);
 			}
 			
 		}
+		if(menu.kosz){
+			ctx2.drawImage(bgs, 600, 900, 320, 240, 200, 160, 200, 150);
+			ctx2.font = "12px rockwell"; 
+			ctx2.fillText('Czy napewno chcesz usunąć,',220,190);
+			ctx2.fillText('ten przedmiot ?',255,205); 
+			ctx2.drawImage(sprite, 50, 740, 50, 50, 330, 250, 30, 30);
+			ctx2.drawImage(sprite, 250, 790, 50, 50, 240, 250, 30, 30);
+		}
 	}
-	
 }
 
 
 
 function ekwipunek(){
-	for(i = 0; i < przedmiotyArr.length; i++){
+	var pALength = przedmiotyArr.length;
+	for(i = 0; i < pALength; i++){
 		ekwipunekArr.unshift(przedmiotyArr[i].nazwa);
 	}
 }
@@ -162,27 +292,27 @@ function konsola(text){
 function odswiezanie() {
 	setInterval(function() {
 			ctx2.clearRect(0, 0, 800, 600);
-			minimapa();
-			mapaGra();
-			opisy();
-			muzyka();
-			interfejsDane();
-			ekwipunek();
-			wyswietlanieEkwipunku();
-			ctx2.fillText(konsolaWpisywanie[0],0,500);
 			if(menu.interfejs){
 				ikony();
 			}
+			minimapa();
+			mapaGra();
+			interfejsDane();
+			opisy();
+			muzyka();
+			ekwipunek();
+			wyswietlanieEkwipunku();
+			ctx2.fillText(konsolaWpisywanie[0],0,500);
+
 	}, 25);
 } 
 
 function muzyka(){
-		var test = tempX-430;
-		//var sto1 = tempX4-235;
 
 	if(menu.opcje && !menu.wczytaj && !menu.nowa && !menu.glowne){
 		ctx2.fillStyle = "black";
 		var sto = tempX-430;
+		
 		if(sto <= 0){
 			activeAudio.volume = 0;
 			ctx2.fillRect(430,175,0,30);
@@ -198,6 +328,8 @@ function muzyka(){
 
 		
 	}
+		
+		
 	if(menu.opcjeGra && menu.muzykaGra){
 		var sto = tempX4-235;
 		
@@ -206,12 +338,12 @@ function muzyka(){
 		ctx2.drawImage(sprite,250,200,150,10,235,85,100,20);
 		if(sto <= 0){
 			activeAudio.volume = 0;
-			ctx2.drawImage(sprite,250,211,11,8,235-7.5,88,15,15);
+			ctx2.drawImage(sprite,250,211,11,8,235-9,88,15,15);
 		}else if(sto <= 100){
 			ctx2.drawImage(sprite,250,211,11,8,sto+225,88,15,15);
 			activeAudio.volume = sto/100;
 		}else if(sto >= 100){
-			ctx2.drawImage(sprite,250,211,11,8,235-7.5,88,15,15);
+			ctx2.drawImage(sprite,250,211,11,8,335-7.5,88,15,15);
 			activeAudio.volume = 1;
 			
 		}
@@ -236,28 +368,17 @@ function minimapa(){
 		var polowaS = szerokosc/2
 		
 		if(!menu.ekwipunek && !menu.statystyki && !menu.opcjeGra && !menu.osiagniecia && !menu.dziennik && !menu.czary){
-			ctx2.fillStyle = "red";
-			predkoscPzewijaniaMapy = 5;
-			/* 			for (var i = 0; i < 23; i++){
-			a = (i+1)*25;
-			if(a < 450){
-			ctx2.strokeRect(25,a, 550,0);
+			if(mousePos.y <= 25 && mousePos.x <= 600 && tempY2 - predkoscPrzewijaniaMapy >= 0){
+				tempY2= tempY2 - predkoscPrzewijaniaMapy;
 			}
-			if(a < 600){
-			ctx2.strokeRect(a,25, 0,400);	
+			if(mousePos.x <= 25 && mousePos.y <= 450 && tempX2 - predkoscPrzewijaniaMapy >= 600){
+				tempX2= tempX2 - predkoscPrzewijaniaMapy;
 			}
-			} */
-			if(mousePos.y <= 25 && mousePos.x <= 600 && tempY2 - predkoscPzewijaniaMapy >= 0){
-				tempY2= tempY2 - predkoscPzewijaniaMapy;
+			if(mousePos.y >= 425 && mousePos.y <=450 && mousePos.x <= 600 && tempY2 + predkoscPrzewijaniaMapy <= 200){
+				tempY2= tempY2 + predkoscPrzewijaniaMapy;
 			}
-			if(mousePos.x <= 25 && mousePos.y <= 450 && tempX2 - predkoscPzewijaniaMapy >= 600){
-				tempX2= tempX2 - predkoscPzewijaniaMapy;
-			}
-			if(mousePos.y >= 425 && mousePos.y <=450 && mousePos.x <= 600 && tempY2 + predkoscPzewijaniaMapy <= 200){
-				tempY2= tempY2 + predkoscPzewijaniaMapy;
-			}
-			if(mousePos.x >= 575 && mousePos.x <= 600 && mousePos.y <= 450 && tempX2 + predkoscPzewijaniaMapy <= 800){
-				tempX2= tempX2 + predkoscPzewijaniaMapy;
+			if(mousePos.x >= 575 && mousePos.x <= 600 && mousePos.y <= 450 && tempX2 + predkoscPrzewijaniaMapy <= 800){
+				tempX2= tempX2 + predkoscPrzewijaniaMapy;
 			}
 			
 		}
@@ -322,39 +443,39 @@ function mapaGra(){
 function ikony(){
 	
 	if(menu.ekwipunek){
-		ctx2.drawImage(sprite,100, 50, 50, 50, 600, 300, 50, 50);
+		ctx.drawImage(sprite,100, 50, 50, 50, 600, 300, 50, 50);
 	}else if(mousePos.x > 600 && mousePos.x < 650 && mousePos.y > 300 && mousePos.y < 350){
-		ctx2.drawImage(sprite, 50, 50, 50, 50, 600, 300, 50, 50);
+		ctx.drawImage(sprite, 50, 50, 50, 50, 600, 300, 50, 50);
 	}else{
-		ctx2.drawImage(sprite, 0, 50, 50, 50, 600, 300, 50, 50);
+		ctx.drawImage(sprite, 0, 50, 50, 50, 600, 300, 50, 50);
 	}
 	if(menu.statystyki){
-		ctx2.drawImage(sprite,100, 150, 50, 50, 650, 300, 50, 50);
+		ctx.drawImage(sprite,100, 150, 50, 50, 650, 300, 50, 50);
 	}else if(mousePos.x > 650 && mousePos.x < 700 && mousePos.y > 300 && mousePos.y < 350){
-		ctx2.drawImage(sprite, 50, 150, 50, 50, 650, 300, 50, 50);
+		ctx.drawImage(sprite, 50, 150, 50, 50, 650, 300, 50, 50);
 	}else{
-		ctx2.drawImage(sprite, 0, 150, 50, 50, 650, 300, 50, 50);
+		ctx.drawImage(sprite, 0, 150, 50, 50, 650, 300, 50, 50);
 	}
 	if(menu.czary){
-		ctx2.drawImage(sprite,100, 100, 50, 50, 700, 300, 50, 50);
+		ctx.drawImage(sprite,100, 100, 50, 50, 700, 300, 50, 50);
 	}else if(mousePos.x > 700 && mousePos.x < 750 && mousePos.y > 300 && mousePos.y < 350){
-		ctx2.drawImage(sprite, 50, 100, 50, 50, 700, 300, 50, 50);
+		ctx.drawImage(sprite, 50, 100, 50, 50, 700, 300, 50, 50);
 	}else{
-		ctx2.drawImage(sprite, 0, 100, 50, 50, 700, 300, 50, 50);
+		ctx.drawImage(sprite, 0, 100, 50, 50, 700, 300, 50, 50);
 	}
 	if(menu.dziennik){
-		ctx2.drawImage(sprite,100, 200, 50, 50, 750, 300, 50, 50);
+		ctx.drawImage(sprite,100, 200, 50, 50, 750, 300, 50, 50);
 	}else if(mousePos.x > 750 && mousePos.x < 800 && mousePos.y > 300 && mousePos.y < 350){
-		ctx2.drawImage(sprite, 50, 200, 50, 50, 750, 300, 50, 50);
+		ctx.drawImage(sprite, 50, 200, 50, 50, 750, 300, 50, 50);
 	}else{
-		ctx2.drawImage(sprite, 0, 200, 50, 50, 750, 300, 50, 50);
+		ctx.drawImage(sprite, 0, 200, 50, 50, 750, 300, 50, 50);
 	}
 	if(menu.osiagniecia){
-		ctx2.drawImage(sprite,100, 250, 50, 50, 600, 350, 50, 50);
+		ctx.drawImage(sprite,100, 250, 50, 50, 600, 350, 50, 50);
 	}else if(mousePos.x > 600 && mousePos.x < 650 && mousePos.y > 350 && mousePos.y < 400){
-		ctx2.drawImage(sprite, 50, 250, 50, 50, 600, 350, 50, 50);
+		ctx.drawImage(sprite, 50, 250, 50, 50, 600, 350, 50, 50);
 	}else{
-		ctx2.drawImage(sprite, 0, 250, 50, 50, 600, 350, 50, 50);
+		ctx.drawImage(sprite, 0, 250, 50, 50, 600, 350, 50, 50);
 	}
 	if(menu.opcjeGra){
 		if(mousePos.x >30 && mousePos.x < 215 && mousePos.y > 140 && mousePos.y < 150 && !menu.muzykaGra){
@@ -371,13 +492,33 @@ function ikony(){
 		}else{
 			ctx2.drawImage(sprite,0, 640, 50, 50, 195, 85, 20, 25);
 		}
-		
-		
-		ctx2.drawImage(sprite,100, 300, 50, 50, 650, 350, 50, 50);
+		if(menu.przewijanie){
+			if(predkoscPrzewijaniaMapy == 0){
+				ctx.drawImage(sprite,50, 740, 50, 50, 230, 80, 25, 25);
+			}else{
+				ctx.drawImage(sprite,0, 740, 50, 50, 230, 80, 25, 25);
+			}
+			if(predkoscPrzewijaniaMapy == 1){
+				ctx.drawImage(sprite,50, 740, 50, 50, 270, 80, 25, 25);
+			}else{
+				ctx.drawImage(sprite,0, 740, 50, 50, 270, 80, 25, 25);
+			}
+			if(predkoscPrzewijaniaMapy == 3){
+				ctx.drawImage(sprite,50, 740, 50, 50, 310, 80, 25, 25);
+			}else{
+				ctx.drawImage(sprite,0, 740, 50, 50, 310, 80, 25, 25);
+			}
+			if(predkoscPrzewijaniaMapy == 6){
+				ctx.drawImage(sprite,50, 740, 50, 50, 350, 80, 25, 25);
+			}else{
+				ctx.drawImage(sprite,0, 740, 50, 50, 350, 80, 25, 25);
+			}
+		}
+		ctx.drawImage(sprite,100, 300, 50, 50, 650, 350, 50, 50);
 	}else if(mousePos.x > 650 && mousePos.x < 700 && mousePos.y > 350 && mousePos.y < 400){
-		ctx2.drawImage(sprite, 50, 300, 50, 50, 650, 350, 50, 50);
+		ctx.drawImage(sprite, 50, 300, 50, 50, 650, 350, 50, 50);
 	}else{
-		ctx2.drawImage(sprite, 0, 300, 50, 50, 650, 350, 50, 50);
+		ctx.drawImage(sprite, 0, 300, 50, 50, 650, 350, 50, 50);
 	}
 	
 }
@@ -446,8 +587,8 @@ function wyswietlanieMenu(){
 	}
 	if(menu.nowa){
 		ctx.drawImage(bgs,0,900,600,450,0,0,800,600);
-		ctx.fillText("Nowy Obóz",340,100);
-		ctx.fillText("Stary Obóz",340,150);
+		ctx.fillText("Stary Obóz",340,100);
+		ctx.fillText("Nowy Obóz",340,150);
 		ctx.fillText("Sekta",340,200);
 		ctx.fillText("Powrót",340,300);
 	}
@@ -475,7 +616,7 @@ function wyswietlanieMenu(){
 		ctx.fillText("Obóz : "+postac[0].oboz,100,70);
 		ctx.fillText("Poziom : "+postac[0].poziom,100,90);
 		ctx.fillText("Doświadczenie : "+postac[0].doswiadczenie,100,110);
-		ctx.fillText("Następny Poziom : nextLvl",100,130);
+		ctx.fillText("Następny poziom : "+poziomyArr[postac[0].poziom],100,130);
 		ctx.fillText("Magia : Krąg "+postac[0].krag,100,150);
 		ctx.fillText("Atrybuty",100,250);
 		ctx.fillText("Siła : "+postac[0].sila,100,270);
@@ -512,13 +653,20 @@ function wyswietlanieMenu(){
 		ctx.font = "15px rockwell";
 		ctx.fillText("Prędkość przewijania",45,100);
 		ctx.fillText("mapy:",95,115);
-		ctx.fillText("Muzyka:",85,150);		
+		ctx.fillText("Muzyka:",85,150);	
+		if(menu.przewijanie){
+			ctx.fillText("Off",234,70);
+			ctx.fillText("1x",274,70);
+			ctx.fillText("3x",314,70);	
+			ctx.fillText("6x",354,70);
+		}
 	}
 
 }
 
 function interfejsDane(){
 	if(menu.interfejs && !menu.opcje && !menu.glowne && !menu.wczytaj && !menu.nowa){
+		ctx2.font = "10px rockwell";		
 		ctx2.drawImage(sprite,250, 50, 100, 50, 600, 200, 100, 25);
 		ctx2.drawImage(sprite,150, 50, 50, 50, 600, 200, 100/(maxHp/postac[0].hp), 25);
 		ctx2.drawImage(sprite,150, 200, 100, 50, 600, 200, 100, 25);
@@ -527,12 +675,12 @@ function interfejsDane(){
 		ctx2.drawImage(sprite,150, 200, 100, 50, 700, 200, 100, 25);
 		
 		ctx2.drawImage(sprite,250, 150, 100, 50, 600, 225, 200, 25);
-		ctx2.drawImage(sprite,150, 150, 100, 50, 600, 225, 200/(1000/postac[0].doswiadczenie), 25);
+		ctx2.drawImage(sprite,150, 150, 100, 50, 600, 225, 200/(poziomyArr[postac[0].poziom]/postac[0].doswiadczenie), 25);
 		ctx2.drawImage(sprite,150, 200, 100, 50, 600, 225, 200, 25);
 		ctx2.fillStyle = "White";
 		ctx2.fillText(postac[0].hp+" / "+maxHp,640,215);
 		ctx2.fillText(postac[0].mp+" / "+maxMp,740,215);
-		ctx2.fillText(postac[0].doswiadczenie+" / "+1000,677,240);
+		ctx2.fillText(postac[0].doswiadczenie+" / "+poziomyArr[postac[0].poziom],685,240);
 		ctx2.fillStyle = "rgb(198,170,123)";
 		//ctx2.fillText("Ruda : "+postac[0].zloto,605,245);
 	}

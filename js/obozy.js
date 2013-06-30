@@ -2,17 +2,19 @@ var maxHp = 0;
 var maxMp = 0;
 
 function obliczanieMaxHp(){
-	maxHp = postac[0].hp+5;
+	maxHp = postac[0].hp;
 }
 
 function obliczanieMaxMp(){
-	maxMp = postac[0].mp+5;
+	maxMp = postac[0].mp;
 }
 var obozy=[{
 		opis:"  Stary Obóz to duży kamienny zamek otoczony drewnianym obmurowaniem,tzw. zewnętrznym pierścieniem. To miejsce w typowym średniowiecznym klimacie. Dzięki kopalni i handlu rudą mieszkańcy zapewnili sobie dostatnie życie. W chwili inkantacji Bariery nastąpił tu bunt więźniów pod przywództwem Gomeza. Teraz to on o jego ludzie sprawują władzę. Można tu również spotkać Magów Ognia, ostatnich ludzi wiernych królestwu, oraz współtwórców bariery. Stary Obóz prowadzi ciągłą walkę z Nowym, zaś przedstawicieli sekty ma za szaleńców. Mimo to prowadzi z nimi handel jak i ze światem zewnętrznym.",
 		cechy:[{
-				hp:12,
-				mp:8,
+				hp:10,
+				mp:10,
+				poziomHp:3,
+				poziomMp:3,
 				sila:12,
 				zrecznosc:8,
 				szybkosc:10,
@@ -20,7 +22,7 @@ var obozy=[{
 				inteligencja:10,
 				zloto:0,
 				poziom:0,
-				doswiadczenie:333,
+				doswiadczenie:1,
 				oboz:"Stary Obóz",
 				krag: 0,
 				oPociski: 0,
@@ -36,8 +38,10 @@ var obozy=[{
 },{
 	opis:'  Grupa więźniów, która kompletnie odcięła się od świata zewnętrznego. Nie obchodzi ich król, ani wojna z orkami, chcą po prostu się wydostać z Kolonii. Magowie Wody, będący najwyższą kastą, postanowili wysadzić wielki kopiec rudy, aby zniszczyć barierę. Jednak tak wielka ilość rudy nakłania do licznych kradzieży, stąd pomysł powołania najemników. Ich szefem został Lee, generał armii królewskiej. Tak powstał Nowy Obóz. Nie muszą handlować ze światem zewnętrznym, przez co cała rudą, jaką wydobędą trafia na kopiec. Stawiając wielką tamę na jeziorze, utworzyli pola ryżowe, z których pochodzi żywność i tani alkohol. Nowy Obóz to wielka jaskinia wydrążona wewnątrz niemniejszej góry. Domy wykute w skale zamieszkują szkodnicy, najemnicy oraz magowie wody.',
 	cechy:[{
-			hp:10,
-			mp:10,
+			hp:12,
+			mp:8,
+			poziomHp:4,
+			poziomMp:2,
 			sila:10,
 			zrecznosc:12,
 			szybkosc:10,
@@ -45,7 +49,7 @@ var obozy=[{
 			inteligencja:10,
 			zloto:0,
 			poziom:0,
-			doswiadczenie:333,
+			doswiadczenie:1,
 			oboz:"Nowy Obóz",
 			krag: 0,
 			oPociski: 0,
@@ -63,13 +67,15 @@ var obozy=[{
 			hp:8,
 			mp:12,
 			sila:8,
+			poziomHp:2,
+			poziomMp:4,
 			zrecznosc:8,
 			szybkosc:10,
 			celnosc:10,
 			inteligencja:10,
 			zloto:0,
 			poziom:0,
-			doswiadczenie:333,
+			doswiadczenie:1,
 			oboz:"Sekta",
 			krag: 0,
 			oPociski: 0,

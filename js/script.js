@@ -15,15 +15,18 @@ var menu = {
 	clicked:false,
 	przewijanie: false,
 	muzykaGra: false,
+	sklep:false,
+	kosz:false,
 	
-	
-
 }
-
+var poziomyArr = [ ];
 var postac = {};
 
 var canvas,
+pkosz = 0,
+sto = 70,
 skala,
+predkoscPrzewijaniaMapy = 1,
 tempX = 500, 
 tempX2 = 700,
 tempY2 = 100,
@@ -53,37 +56,39 @@ bgs.src = 'img/bg.png';
 
 audio0 = new Audio('mp3/gothic0.mp3');  
 
- activeAudio = audio0;
+activeAudio = audio0;
 
 audio0.addEventListener('ended', function() {
 		activeAudio = audio0;
 		activeAudio.currentTime = 0;
 		activeAudio.play();
 }, false);    
- 
-   
+
+
 
 function LetsBegin(){ 
-
-		canvas = document.getElementById('example');
-		canvas1 = document.getElementById('example2');
-		canvas2 = document.getElementById('example1');
-		
-		if (canvas.getContext) {
-			ctx = canvas.getContext('2d');
-		}
-		if (canvas2.getContext) {
-			ctx2 = canvas2.getContext('2d');
-		}
-		if (canvas1.getContext) {
-			ctx1 = canvas1.getContext('2d');
-		}
+	
+	canvas = document.getElementById('example');
+	canvas1 = document.getElementById('example2');
+	canvas2 = document.getElementById('example1');
+	
+	if (canvas.getContext) {
+		ctx = canvas.getContext('2d');
+	}
+	if (canvas2.getContext) {
+		ctx2 = canvas2.getContext('2d');
+	}
+	if (canvas1.getContext) {
+		ctx1 = canvas1.getContext('2d');
+	}
+	
 	
 	
 	wyswietlanieMenu();
 	odswiezanie();
 	odswiezanie1();
 	musicControl();
+	
 	function myDown(evt){
 		var obj = canvas2;
 		var top = 0;
@@ -96,28 +101,42 @@ function LetsBegin(){
 		
 		var mouseX = evt.clientX - left + window.pageXOffset; 
 		var mouseY = evt.clientY - top + window.pageYOffset; 
-
+		clicked = true;
+		var pALength = przedmiotyArr.length;
 		if(mouseX >429 && mouseY >175 && mouseX <531 && mouseY <205 && !menu.glowne && menu.opcje && !menu.statystyki && !menu.ekwipunek){
 			tempX = mousePos.x; 
 			clicked = true;
 		}
 		
-		if(mouseX >235 && mouseY >85 && mouseX <335 && mouseY <105 && !menu.glowne && menu.muzyka){
+		if(mouseX >= 235 && mouseY >=85 && mouseX <=335 && mouseY <=105 &&  !menu.glowne && menu.muzykaGra ){
 			tempX4 = mousePos.x; 
 			clicked = true;
 		}
-
+		
 		if(mouseX >600 && mouseY >0 && mouseX <800 && mouseY <200 && !menu.glowne && menu.interfejs &&!menu.ekwipunek && !menu.statystyki && !menu.opcjeGra && !menu.osiagniecia && !menu.dziennik && !menu.czary){
 			tempX2 = mousePos.x;
 			tempY2 = mousePos.y;
 			clicked = true;
 		}
-		
+		if(menu.ekwipunek){
+			for(i = 0; i < pALength; i++){
+				var p = przedmiotyArr[i];
+				if(p){
+					if(mouseX >= 215 && mouseX <= 240 && mouseY >= 45 + i * 25 && mouseY <= 65 + i * 25){
+						ctx2.drawImage(sprite,400, 740, 50, 50, 215, 45 + i * 25, 25, 25);
+					}
+				}
+			}
+		}
+		if(mouseX >= 330 && mouseY >=250 && mouseX <=360 && mouseY <=280){
+			menu.kosz = false;
+			przedmiotyArr.splice(pKosz,1)
+		}
+		if(mouseX >= 240 && mouseY >=250 && mouseX <=270 && mouseY <=280){
+			menu.kosz = false;	
+		}
 	}
-		
-	
 
-	
 	function mousemove(evt) {
 		var top = 0;
 		var left = 0;
@@ -126,14 +145,14 @@ function LetsBegin(){
 		var mouseY = evt.pageY; 
 		mousePos.x = mouseX;
 		mousePos.y = mouseY;
-		if(mouseX >429 && mouseY >175 && mouseX <531 && mouseY <205 && !menu.glowne && menu.opcje && clicked &&!menu.ekwipunek && !menu.statystyki && !menu.opcjeGra && !menu.osiagniecia && !menu.dziennik && !menu.czary){
+		if( checkMousePos(429, 175, 531, 205) && !menu.glowne && menu.opcje && clicked &&!menu.ekwipunek && !menu.statystyki && !menu.opcjeGra && !menu.osiagniecia && !menu.dziennik && !menu.czary){
 			tempX = mousePos.x; 
 		}
 		if(mouseX >600 && mouseY >0 && mouseX <800 && mouseY <200 && !menu.glowne && menu.interfejs && clicked &&!menu.ekwipunek && !menu.statystyki && !menu.opcjeGra && !menu.osiagniecia && !menu.dziennik && !menu.czary){
 			tempX2 = mousePos.x;
 			tempY2 = mousePos.y;
 		}
-		if(mouseX >=235 && mouseY >=85 && mouseX<=335 && mouseY <=105 && !menu.glowne && menu.muzyka && clicked){
+		if(mouseX >=235 && mouseY >=85 && mouseX<=335 && mouseY <=105 &&  !menu.glowne && menu.muzykaGra && clicked){
 			tempX4 = mousePos.x; 
 		}
 		
@@ -148,7 +167,49 @@ function LetsBegin(){
 		mousePos.x = mouseX;
 		mousePos.y = mouseY;
 		clicked = false;
-		if (mouseX >335 && mouseY >275 && mouseX <455 && mouseY <305 && menu.glowne){
+		var pLength = przedmiotyZalozone.length,
+		pALength = przedmiotyArr.length,
+		added = false;
+		if(menu.ekwipunek ){
+			
+			for(i = 0; i < pALength; i++){
+				var p = przedmiotyArr[i];	
+				if(mouseX >= 215 && mouseX <= 240 && mouseY >= 45 + i * 25 && mouseY <= 65 + i * 25){
+					var eq = przedmiotyArr.splice(i,1);
+					for(j = 0; j < pLength && !added;j++){
+						var pz = przedmiotyZalozone[j];
+						if(pz && eq[0].typ == pz.typ){
+							var eq1 = przedmiotyZalozone.splice(j,1);
+							eq[0].zalozony = true;
+							eq1[0].zalozony = false;
+							przedmiotyZalozone.push(eq[0]);
+							przedmiotyArr.push(eq1[0]);
+							added = true;
+						}
+					}
+					if(!added) {	
+						eq[0].zalozony = true;
+						przedmiotyZalozone.push(eq[0]);
+					}
+				}
+				if(mouseX >= 240 && mouseX <= 265 && mouseY >= 45 + i * 25 && mouseY <= 65 + i * 25 && !menu.kosz){
+					menu.kosz = true;
+					pKosz = i;
+				}
+			}
+			for(i = 0; i <= pLength; i++){
+				var pz = przedmiotyZalozone[i];
+				
+				if(pz){
+					if(mousePos.x > 500 && mousePos.x < 525 && mousePos.y > 45 + i * 25 && mousePos.y < 65 + i * 25){
+						var eq = przedmiotyZalozone.splice(i,1);
+						eq[0].zalozony = false;
+						przedmiotyArr.push(eq[0]);
+					}
+				}
+			}
+		}
+		if (checkMousePos(335, 275, 455, 305) && menu.glowne){
 			menu.glowne = false;
 			menu.nowa = true;
 			wyswietlanieMenu();
@@ -158,41 +219,44 @@ function LetsBegin(){
 			wyswietlanieMenu();
 		}
 		if(mouseX >335 && mouseY >75 && mouseX <455 && mouseY <105 && menu.nowa && !menu.opcje && !menu.glowne && !menu.wczytaj ){
-			 postac = obozy[0].cechy;
-			 obliczanieMaxHp();
-			 obliczanieMaxMp();
-			 menu.nowa = false;
-			 menu.interfejs = true;
-			 menu.bg = false;
-			 wyswietlanieMenu();
-			 konsola("M - On/Off Muzyka");
-			 konsola("Enjoy it !");
-			 konsola("Witaj w Gothic ! : )");
-
+			postac = obozy[0].cechy;
+			poziomy();
+			obliczanieMaxHp();
+			obliczanieMaxMp();
+			menu.nowa = false;
+			menu.interfejs = true;
+			menu.bg = false;
+			wyswietlanieMenu();
+			konsola("M - On/Off Muzyka");
+			konsola("Enjoy it !");
+			konsola("Witaj w Gothic ! : )");
+			
 		}
 		if(mouseX >335 && mouseY >125 && mouseX <455 && mouseY <155 && menu.nowa && !menu.opcje && !menu.glowne && !menu.wczytaj ){
-			 postac = obozy[1].cechy;
-			 obliczanieMaxHp();
-			 obliczanieMaxMp();
-			 menu.nowa = false;
-			 menu.interfejs = true;
-			 menu.bg = false;
-			 wyswietlanieMenu();
-			 konsola("M - On/Off Muzyka");
-			 konsola("Enjoy it !");
-			 konsola("Witaj w Gothic ! : )");
+			postac = obozy[1].cechy;
+			poziomy();
+			obliczanieMaxHp();
+			obliczanieMaxMp();
+			menu.nowa = false;
+			menu.interfejs = true;
+			menu.bg = false;
+			wyswietlanieMenu();
+			konsola("M - On/Off Muzyka");
+			konsola("Enjoy it !");
+			konsola("Witaj w Gothic ! : )");
 		}
 		if(mouseX >335 && mouseY >175 && mouseX <455 && mouseY <205 && menu.nowa && !menu.opcje && !menu.glowne && !menu.wczytaj ){
-			 postac = obozy[2].cechy;
-			 obliczanieMaxHp();
-			 obliczanieMaxMp();
-			 menu.nowa = false;
-			 menu.interfejs = true;
-			 menu.bg = false;
-			 wyswietlanieMenu();
-			 konsola("M - On/Off Muzyka");
-			 konsola("Enjoy it !");
-			 konsola("Witaj w Gothic ! : )");
+			postac = obozy[2].cechy;
+			poziomy();
+			obliczanieMaxHp();
+			obliczanieMaxMp();
+			menu.nowa = false;
+			menu.interfejs = true;
+			menu.bg = false;
+			wyswietlanieMenu();
+			konsola("M - On/Off Muzyka");
+			konsola("Enjoy it !");
+			konsola("Witaj w Gothic ! : )");
 		}
 		if (mouseX >325 && mouseY >310 && mouseX <465 && mouseY <340 && menu.glowne){
 			menu.glowne = false;
@@ -224,7 +288,6 @@ function LetsBegin(){
 			menu.wczytaj = false;
 			wyswietlanieMenu();
 		}
-
 		if(mouseX >325 && mouseY >125 && mouseX <465 && mouseY <155 && menu.nowa && !menu.opcje && !menu.glowne && !menu.wczytaj){
 			postac = obozy[1].cechy;
 			menu.nowa = false;
@@ -240,10 +303,12 @@ function LetsBegin(){
 		if(mouseX >30 && mouseY >140 && mouseX <200 && mouseY <150 && !menu.glowne && menu.opcjeGra && !menu.muzykaGra){
 			menu.przewijanie = false;
 			menu.muzykaGra = true;
+			wyswietlanieMenu();
 		}
 		if(mouseX >30 && mouseY >85 && mouseX <200 && mouseY <125 && !menu.glowne && menu.opcjeGra && !menu.przewijanie){
 			menu.muzykaGra = false;
 			menu.przewijanie = true;
+			wyswietlanieMenu();
 		}
 		if(mouseX >600 && mouseY >300 && mouseX <650 && mouseY <350 && !menu.glowne && menu.interfejs && !menu.ekwipunek && !menu.statystyki && !menu.opcjeGra && !menu.osiagniecia && !menu.czary && !menu.dziennik && !menu.czary && !menu.dziennik){
 			menu.clicked = true;
@@ -253,7 +318,6 @@ function LetsBegin(){
 			wyswietlanieMenu();
 			menu.ekwipunek = false;
 			menu.clicked = false;
-			
 		}
 		if(mouseX >650 && mouseY >300 && mouseX <700&& mouseY <350 && !menu.glowne && menu.interfejs && !menu.statystyki && !menu.ekwipunek && !menu.opcjeGra && !menu.osiagniecia && !menu.czary && !menu.dziennik){
 			menu.statystyki = true;
@@ -263,7 +327,6 @@ function LetsBegin(){
 			wyswietlanieMenu();
 			menu.statystyki = false;
 			menu.clicked = false;
-			
 		}
 		if(mouseX > 700 && mouseX < 750 && mouseY > 300 && mouseY < 350 && menu.interfejs && !menu.statystyki && !menu.ekwipunek && !menu.czary && !menu.opcjeGra && !menu.osiagniecia && !menu.czary && !menu.dziennik){
 			menu.czary = true;
@@ -273,7 +336,6 @@ function LetsBegin(){
 			wyswietlanieMenu();
 			menu.czary = false;
 			menu.clicked = false;
-			
 		}
 		if(mouseX > 750 && mouseX < 800 && mouseY > 300 && mouseY < 350 && menu.interfejs && !menu.statystyki && !menu.ekwipunek && !menu.dziennik && !menu.opcjeGra && !menu.osiagniecia && !menu.czary && !menu.dziennik){
 			menu.dziennik = true;
@@ -283,7 +345,6 @@ function LetsBegin(){
 			wyswietlanieMenu();
 			menu.dziennik = false;
 			menu.clicked = false;
-			
 		}
 		if(mouseX > 600 && mouseX < 650 && mouseY > 350 && mouseY < 400 && menu.interfejs && !menu.statystyki && !menu.ekwipunek  && !menu.opcjeGra && !menu.osiagniecia && !menu.czary && !menu.dziennik){
 			menu.osiagniecia = true;
@@ -302,8 +363,21 @@ function LetsBegin(){
 			wyswietlanieMenu();
 			menu.opcjeGra = false;
 			menu.clicked = false;
-			
 		}
+		if(mouseX > 230 && mouseX < 255 && mouseY > 80 && mouseY < 105 && menu.interfejs && !menu.ekwipunek && menu.opcjeGra && menu.przewijanie && predkoscPrzewijaniaMapy != 0){
+			predkoscPrzewijaniaMapy = 0;
+		}
+		if(mouseX > 270 && mouseX < 295 && mouseY > 80 && mouseY < 105 && menu.interfejs && !menu.ekwipunek && menu.opcjeGra && menu.przewijanie && predkoscPrzewijaniaMapy != 1){
+			predkoscPrzewijaniaMapy = 1;
+		}
+		if(mouseX > 310 && mouseX < 335 && mouseY > 80 && mouseY < 105 && menu.interfejs && !menu.ekwipunek && menu.opcjeGra && menu.przewijanie && predkoscPrzewijaniaMapy != 3){
+			predkoscPrzewijaniaMapy = 3;
+		}
+		if(mouseX > 350 && mouseX < 375 && mouseY > 80 && mouseY < 105 && menu.interfejs && !menu.ekwipunek && menu.opcjeGra && menu.przewijanie && predkoscPrzewijaniaMapy != 6){
+			predkoscPrzewijaniaMapy = 6;
+		}
+		
+		
 		
 	}
 	canvas2.onmousemove = mousemove;
@@ -360,7 +434,35 @@ function odswiezanie1() {
 			}
 	},100);
 } 
-   
+
+function poziomy(){
+	for(var i=1;i<51;i++){
+		poziomyArr.push(Math.round(Math.pow(i+1.12,3)));	
+		//console.log(Math.round(Math.pow(i+1.12,3)));
+	}
+}
+
+function nastepnyPoziom(){
+	if(poziomyArr[postac[0].poziom] <= postac[0].doswiadczenie){
+		postac[0].doswiadczenie = 0;
+		postac[0].poziom++;	
+		maxHp = maxHp + postac[0].poziomHp;
+		maxMp = maxMp + postac[0].poziomMp;
+		postac[0].hp = postac[0].hp + 8 +postac[0].poziom;
+		postac[0].mp = postac[0].mp + 3 +postac[0].poziom;
+		sprawdzanieZycia();
+	}
+}
+
+function sprawdzanieZycia(){
+	if(maxHp < postac[0].hp){
+		postac[0].hp = maxHp;
+	}
+	if(maxMp < postac[0].mp){
+		postac[0].mp = maxMp;	
+	}
+}
+
 
 
 
