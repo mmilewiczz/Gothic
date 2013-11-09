@@ -6,11 +6,11 @@ var przedmiotyArr = [{
 		dodatkowe:"Brak",
 		cechy:[{ 
 				obrazeniaMin:5,
-				obrazeniaMax:10,
+				obrazeniaMax:10
 		}],
 		zalozony:false,
 		aktywny:false,
-		stopnioweRysowanie1:0,
+		stopnioweRysowanie1:0
 		
 },{ 
 		opis:"przykladowy opis",
@@ -20,11 +20,11 @@ var przedmiotyArr = [{
 		dodatkowe:"Brak",
 		cechy:[{ 
 				obrazeniaMin:5,
-				obrazeniaMax:10,
+				obrazeniaMax:10
 		}],
 		zalozony:false,
 		aktywny:false,
-		stopnioweRysowanie1:0,
+		stopnioweRysowanie1:0
 		
 },{
 	opis:"przykladowy opis2",
@@ -35,11 +35,11 @@ var przedmiotyArr = [{
 	cechy:[{ 
 			obronaM:1,
 			obronaP:2,
-			obrona:3,
+			obrona:3
 	}],
 	zalozony:false,
 	aktywny:false,
-	stopnioweRysowanie1:0,
+	stopnioweRysowanie1:0
 	
 }];
 
@@ -52,10 +52,10 @@ var przedmiotyZalozone = [{
 	cechy:[{ 
 			obronaM:1,
 			obronaP:2,
-			obrona:3,
+			obrona:3
 	}],
 	zalozony:true,
 	aktywny:false,
-	stopnioweRysowanie1:0,
+	stopnioweRysowanie1:0
 	
 }];

@@ -11,14 +11,17 @@ var menu = {
 	statystyki:false,
 	ekwipunek:false,
 	osiagniecia:false,
+	czary:false,
 	konsola:false,
 	clicked:false,
 	przewijanie: false,
 	muzykaGra: false,
 	sklep:false,
 	kosz:false,
+	dziennikAktywne:false,
+	dziennikUkonczone:false
 	
-}
+};
 var poziomyArr = [ ];
 var postac = {};
 
@@ -42,6 +45,10 @@ ctx2,
 obozIndex,
 ctx,
 musicOn = false,
+nr_klatki = 1,
+liczba_klatek_anim = 8,
+szerokosc_klatki = 401/ liczba_klatek_anim,
+wysokosc_klatki = 50,
 mousePos = {x:null,y:null};
 /* var bg = new Image(0,0);
 bg.src = 'img/bg.jpg'; */
@@ -51,7 +58,8 @@ mapa = new Image(1000,1000);
 mapa.src = 'img/mapa.png';
 bgs = new Image(2000,2000);
 bgs.src = 'img/bg.png';
-
+var	posY = 100;
+	var posX = 100;
 
 
 audio0 = new Audio('mp3/gothic0.mp3');  
@@ -65,7 +73,54 @@ audio0.addEventListener('ended', function() {
 }, false);    
 
 
+function draw(){
+	
+	nr_klatki++;
+	if (nr_klatki>liczba_klatek_anim) {
+		nr_klatki = 1;
+	}
+	
+	var xklatki = (nr_klatki-1)*szerokosc_klatki;
+	ctx1.drawImage(sprite, xklatki, 0, szerokosc_klatki, wysokosc_klatki, 750, 250, szerokosc_klatki, wysokosc_klatki);  
+	
+}
+function odswiezanie1() {
+	setInterval(function() {
+			ctx1.clearRect(0, 0, 800, 600);
+			if(menu.interfejs){
+				draw();
+			}
+	},100);
+} 
 
+function poziomy(){
+	for(var i=1;i<51;i++){
+		poziomyArr.push(Math.round(Math.pow(i+1.12,3)));	
+		//console.log(Math.round(Math.pow(i+1.12,3)));
+	}
+}
+
+function sprawdzanieZycia(){
+	if(maxHp < postac[0].hp){
+		postac[0].hp = maxHp;
+	}
+	if(maxMp < postac[0].mp){
+		postac[0].mp = maxMp;	
+	}
+}
+
+
+function nastepnyPoziom(){
+	if(poziomyArr[postac[0].poziom] <= postac[0].doswiadczenie){
+		postac[0].doswiadczenie = 0;
+		postac[0].poziom++;	
+		maxHp = maxHp + postac[0].poziomHp;
+		maxMp = maxMp + postac[0].poziomMp;
+		postac[0].hp = postac[0].hp + 8 +postac[0].poziom;
+		postac[0].mp = postac[0].mp + 3 +postac[0].poziom;
+		sprawdzanieZycia();
+	}
+}
 function LetsBegin(){ 
 	
 	canvas = document.getElementById('example');
@@ -130,10 +185,18 @@ function LetsBegin(){
 		}
 		if(mouseX >= 330 && mouseY >=250 && mouseX <=360 && mouseY <=280){
 			menu.kosz = false;
-			przedmiotyArr.splice(pKosz,1)
+			przedmiotyArr.splice(pKosz,1);
 		}
 		if(mouseX >= 240 && mouseY >=250 && mouseX <=270 && mouseY <=280){
 			menu.kosz = false;	
+		}
+		if(mouseX >= 30 && mouseY >=80 && mouseX <=215 && mouseY <=105){
+			menu.dziennikAktywne = true;
+			menu.dziennikUkonczone = false;
+		}
+		if(mouseX >= 30 && mouseY >=205 && mouseX <=215 && mouseY <=230){
+			menu.dziennikAktywne = false;
+			menu.dziennikUkonczone = true;
 		}
 	}
 
@@ -364,7 +427,7 @@ function LetsBegin(){
 			menu.opcjeGra = false;
 			menu.clicked = false;
 		}
-		if(mouseX > 230 && mouseX < 255 && mouseY > 80 && mouseY < 105 && menu.interfejs && !menu.ekwipunek && menu.opcjeGra && menu.przewijanie && predkoscPrzewijaniaMapy != 0){
+		if(mouseX > 230 && mouseX < 255 && mouseY > 80 && mouseY < 105 && menu.interfejs && !menu.ekwipunek && menu.opcjeGra && menu.przewijanie && predkoscPrzewijaniaMapy !== 0){
 			predkoscPrzewijaniaMapy = 0;
 		}
 		if(mouseX > 270 && mouseX < 295 && mouseY > 80 && mouseY < 105 && menu.interfejs && !menu.ekwipunek && menu.opcjeGra && menu.przewijanie && predkoscPrzewijaniaMapy != 1){
@@ -390,13 +453,13 @@ function zapisStanuGry(){
 	
 	localStorage.setItem('arraySave', JSON.stringify({
 			zMenu: menu,
-			zPostsac: postac,
+			zPostsac: postac
 	}));
 	
 }
 
 function wczytanieStanuGry(){
-	load = JSON.parse(localStorage.getItem('arraySave'))
+	load = JSON.parse(localStorage.getItem('arraySave'));
 	menu = load.zMenu;
 	postac = load.zPostac;	
 }
@@ -409,59 +472,7 @@ function pisanie(literka){
 /* var anim = new Image(126,32);
 anim.src = 'anim.png'; */
 
-var nr_klatki = 1;
-var liczba_klatek_anim = 8;
-var szerokosc_klatki = 401/ liczba_klatek_anim;
-var wysokosc_klatki = 50;
 
-function draw(){
-	
-	nr_klatki++;
-	if (nr_klatki>liczba_klatek_anim) {
-		nr_klatki = 1;
-	}
-	
-	var xklatki = (nr_klatki-1)*szerokosc_klatki;
-	ctx1.drawImage(sprite, xklatki, 0, szerokosc_klatki, wysokosc_klatki, 750, 250, szerokosc_klatki, wysokosc_klatki);  
-	
-}
-
-function odswiezanie1() {
-	setInterval(function() {
-			ctx1.clearRect(0, 0, 800, 600);
-			if(menu.interfejs){
-				draw();
-			}
-	},100);
-} 
-
-function poziomy(){
-	for(var i=1;i<51;i++){
-		poziomyArr.push(Math.round(Math.pow(i+1.12,3)));	
-		//console.log(Math.round(Math.pow(i+1.12,3)));
-	}
-}
-
-function nastepnyPoziom(){
-	if(poziomyArr[postac[0].poziom] <= postac[0].doswiadczenie){
-		postac[0].doswiadczenie = 0;
-		postac[0].poziom++;	
-		maxHp = maxHp + postac[0].poziomHp;
-		maxMp = maxMp + postac[0].poziomMp;
-		postac[0].hp = postac[0].hp + 8 +postac[0].poziom;
-		postac[0].mp = postac[0].mp + 3 +postac[0].poziom;
-		sprawdzanieZycia();
-	}
-}
-
-function sprawdzanieZycia(){
-	if(maxHp < postac[0].hp){
-		postac[0].hp = maxHp;
-	}
-	if(maxMp < postac[0].mp){
-		postac[0].mp = maxMp;	
-	}
-}
 
 
 

@@ -1,5 +1,6 @@
 var konsolaArr = [ ];
 var ekwipunekArr = [ ];
+var dziennikArr = [ ];
 function printAtWordWrap(context ,text ,x ,y ,lineHeight ,fitWidth )
 {
 	fitWidth = fitWidth || 0;
@@ -41,7 +42,7 @@ function printAtWordWrap(context ,text ,x ,y ,lineHeight ,fitWidth )
 
 
 function opis(x,y,tresc){
-	ctx2.font = "10px rockwell";	
+	ctx2.font = "10px Comic Sans MS";	
 	printAtWordWrap(ctx2, tresc, x, y, 10, 265 );
 }
 
@@ -56,14 +57,14 @@ function opisy(){
 		}else{
 			obozIndex = 3;
 		}
-		if(obozIndex == 0 || obozIndex == 1 || obozIndex == 2){
+		if(obozIndex === 0 || obozIndex == 1 || obozIndex == 2){
 			on = true;
 			if(stopnioweRysowanie >= 255){
 			}else{
 				stopnioweRysowanie = stopnioweRysowanie + 15;
 			} 
 			ctx2.drawImage(bgs, 600, 900, 320, 239, mousePos.x+20,mousePos.y-20, 330, 260);
-			var myImgData = ctx2.getImageData(mousePos.x+20,mousePos.y-20,330, 260)
+			var myImgData = ctx2.getImageData(mousePos.x+20,mousePos.y-20,330, 260);
 			var data = myImgData.data;
 			for (i=0; i<myImgData.data.length; i+=4) {
 				myImgData.data[i+3] = stopnioweRysowanie;
@@ -77,8 +78,8 @@ function opisy(){
 			ctx2.fillText('Mana : '+obozy[obozIndex].cechy[0].mp,mousePos.x+50,mousePos.y+195);
 			ctx2.fillText('Siła : '+obozy[obozIndex].cechy[0].sila,mousePos.x+50,mousePos.y+205);
 			ctx2.fillText('Zręczność : '+obozy[obozIndex].cechy[0].zrecznosc,mousePos.x+120,mousePos.y+185);
-			ctx2.fillText('Szybkosc : '+obozy[obozIndex].cechy[0].szybkosc,mousePos.x+120,mousePos.y+195);
-			ctx2.fillText('Celnosc : '+obozy[obozIndex].cechy[0].celnosc,mousePos.x+120,mousePos.y+205);
+			ctx2.fillText('Szybkość : '+obozy[obozIndex].cechy[0].szybkosc,mousePos.x+120,mousePos.y+195);
+			ctx2.fillText('Celność : '+obozy[obozIndex].cechy[0].celnosc,mousePos.x+120,mousePos.y+205);
 			ctx2.fillText('Inteligencja : '+obozy[obozIndex].cechy[0].inteligencja,mousePos.x+190,mousePos.y+185);
 		}else{
 			stopnioweRysowanie = 0;
@@ -98,7 +99,7 @@ function wyswietlanieEkwipunku(){
 			var pz = przedmiotyZalozone[i];
 			
 			if(pz){
-				ctx2.font = "15px rockwell";		
+				ctx2.font = "15px Comic Sans MS";		
 				ctx2.fillStyle = "rgb(198,170,123)";
 				ctx2.fillText(pz.nazwa,310,60 + i * 25);
 				ctx2.drawImage(sprite, 100, 740, 50, 50, 525,45 + i * 25, 25,25);
@@ -115,7 +116,7 @@ function wyswietlanieEkwipunku(){
 			
 			
 			if(p){
-				ctx2.font = "15px rockwell";		
+				ctx2.font = "15px Comic Sans MS";		
 				ctx2.fillStyle = "rgb(198,170,123)";
 				ctx2.fillText(p.nazwa,50,60 + i * 25);
 				//ctx2.fillRect(265,50 + i * 20,10,10);
@@ -160,12 +161,12 @@ function wyswietlanieEkwipunku(){
 				if(pz.aktywny){
 					
 					ctx2.drawImage(bgs, 600, 900, 320, 239, mousePos.x-20-250,mousePos.y-20,250, 300);
-					var myImgData = ctx2.getImageData(mousePos.x-20-250,mousePos.y-20,250, 300)
+					var myImgData = ctx2.getImageData(mousePos.x-20-250,mousePos.y-20,250, 300);
 					var data = myImgData.data;
 					for (j=0; j<myImgData.data.length; j+=4) {
 						myImgData.data[j+3] = pz.stopnioweRysowanie1;
 					}
-					ctx2.font = "12px rockwell";		
+					ctx2.font = "12px Comic Sans MS";		
 					ctx2.putImageData(myImgData, mousePos.x-20-250,mousePos.y-20);
 					ctx2.fillStyle = "rgba(198,170,123,"+pz.stopnioweRysowanie1/200+")";
 					ctx2.fillText("Nazwa : "+pz.nazwa,mousePos.x+10-250,mousePos.y+20);
@@ -212,13 +213,13 @@ function wyswietlanieEkwipunku(){
 					p.stopnioweRysowanie1 = p.stopnioweRysowanie1 + 15;
 				} 
 				ctx2.drawImage(bgs, 600, 900, 320, 239, mousePos.x+20,mousePos.y-20, 250, 300);
-				var myImgData = ctx2.getImageData(mousePos.x+20,mousePos.y-20,250, 300)
+				var myImgData = ctx2.getImageData(mousePos.x+20,mousePos.y-20,250, 300);
 				var data = myImgData.data;
 				for (j=0; j<myImgData.data.length; j+=4) {
 					myImgData.data[j+3] = p.stopnioweRysowanie1;
 				} 
 				
-				ctx2.font = "12px rockwell";		
+				ctx2.font = "12px Comic Sans MS";		
 				ctx2.putImageData(myImgData, mousePos.x+20,mousePos.y-20);
 				ctx2.fillStyle = "rgba(198,170,123,"+p.stopnioweRysowanie1/200+")";
 				ctx2.fillText("Nazwa : "+p.nazwa,mousePos.x+45,mousePos.y+20);
@@ -244,7 +245,7 @@ function wyswietlanieEkwipunku(){
 		}
 		if(menu.kosz){
 			ctx2.drawImage(bgs, 600, 900, 320, 240, 200, 160, 200, 150);
-			ctx2.font = "12px rockwell"; 
+			ctx2.font = "12px Comic Sans MS"; 
 			ctx2.fillText('Czy napewno chcesz usunąć,',220,190);
 			ctx2.fillText('ten przedmiot ?',255,205); 
 			ctx2.drawImage(sprite, 50, 740, 50, 50, 330, 250, 30, 30);
@@ -263,7 +264,7 @@ function ekwipunek(){
 }
 
 function wyswietlanieKonsoli(){
-	ctx.font = "12px rockwell"; 
+	ctx.font = "12px Comic Sans MS"; 
 	ctx.fillStyle = "rgb(198,170,123)";
 	var len = konsolaArr.length;
 	if( len > 7 ){
@@ -288,25 +289,6 @@ function konsola(text){
 	wyswietlanieKonsoli();
 
 }
-
-function odswiezanie() {
-	setInterval(function() {
-			ctx2.clearRect(0, 0, 800, 600);
-			if(menu.interfejs){
-				ikony();
-			}
-			minimapa();
-			mapaGra();
-			interfejsDane();
-			opisy();
-			muzyka();
-			ekwipunek();
-			wyswietlanieEkwipunku();
-			ctx2.fillText(konsolaWpisywanie[0],0,500);
-
-	}, 25);
-} 
-
 function muzyka(){
 
 	if(menu.opcje && !menu.wczytaj && !menu.nowa && !menu.glowne){
@@ -331,18 +313,18 @@ function muzyka(){
 		
 		
 	if(menu.opcjeGra && menu.muzykaGra){
-		var sto = tempX4-235;
+		var sto1 = tempX4-235;
 		
 		
 		ctx2.fillStyle = "white";
 		ctx2.drawImage(sprite,250,200,150,10,235,85,100,20);
-		if(sto <= 0){
+		if(sto1 <= 0){
 			activeAudio.volume = 0;
 			ctx2.drawImage(sprite,250,211,11,8,235-9,88,15,15);
-		}else if(sto <= 100){
-			ctx2.drawImage(sprite,250,211,11,8,sto+225,88,15,15);
-			activeAudio.volume = sto/100;
-		}else if(sto >= 100){
+		}else if(sto1 <= 100){
+			ctx2.drawImage(sprite,250,211,11,8,sto1+225,88,15,15);
+			activeAudio.volume = sto1/100;
+		}else if(sto1 >= 100){
 			ctx2.drawImage(sprite,250,211,11,8,335-7.5,88,15,15);
 			activeAudio.volume = 1;
 			
@@ -355,6 +337,9 @@ function muzyka(){
 	
 }
 
+
+
+
 function minimapa(){
 	
 	if(!menu.glowne && menu.interfejs ){	
@@ -365,7 +350,7 @@ function minimapa(){
 		var wysokosc = 57.5;
 		var szerokosc = 42.5;
 		var polowaW = wysokosc/2;
-		var polowaS = szerokosc/2
+		var polowaS = szerokosc/2;
 		
 		if(!menu.ekwipunek && !menu.statystyki && !menu.opcjeGra && !menu.osiagniecia && !menu.dziennik && !menu.czary){
 			if(mousePos.y <= 25 && mousePos.x <= 600 && tempY2 - predkoscPrzewijaniaMapy >= 0){
@@ -416,7 +401,7 @@ function mapaGra(){
 		var wysokosc = 57.5;
 		var szerokosc = 42.5;
 		var polowaW = wysokosc/2;
-		var polowaS = szerokosc/2
+		var polowaS = szerokosc/2;
 		
 		if(tempX2-polowaW > 600 && tempX2+polowaW < 800 && tempY2-polowaS >=0 && tempY2+polowaS <= 200){
 			ctx2.drawImage(mapa,sx*5-wysokosc*2.5,sy*5-szerokosc*2.5 ,wysokosc*5,szerokosc*5,0,0,600,450);
@@ -437,7 +422,16 @@ function mapaGra(){
 		}else if(tempY2+polowaS >= 200){
 			ctx2.drawImage(mapa,sx*5-wysokosc*2.5,1000-szerokosc*5 ,wysokosc*5,szerokosc*5,0,0,600,450);
 		}
-	}	
+		ctx2.fillRect(posX,posY,25,25);
+	}
+
+
+
+	
+}
+function drawoncanvasmove(x,y){ 
+	posY+=y;
+	posX+=x;
 }
 
 function ikony(){
@@ -465,6 +459,20 @@ function ikony(){
 	}
 	if(menu.dziennik){
 		ctx.drawImage(sprite,100, 200, 50, 50, 750, 300, 50, 50);
+		if(mousePos.x >30 && mousePos.x < 215 && mousePos.y > 80 && mousePos.y < 105 && !menu.dziennikAktywne){
+			ctx2.drawImage(sprite, 50, 640, 50, 50, 195, 80, 20, 25);
+		}else if(menu.dziennikAktywne){
+			ctx2.drawImage(sprite, 0, 690, 50, 50, 195, 80, 20, 25);
+		}else{
+			ctx2.drawImage(sprite,0, 640, 50, 50, 195, 80, 20, 25);
+		}
+		if(mousePos.x >30 && mousePos.x < 215 && mousePos.y > 205 && mousePos.y < 230 && !menu.dziennikUkonczone){
+			ctx2.drawImage(sprite, 50, 640, 50, 50, 195, 205, 20, 25);
+		}else if(menu.dziennikUkonczone){
+			ctx2.drawImage(sprite, 0, 690, 50, 50, 195, 205, 20, 25);
+		}else{
+			ctx2.drawImage(sprite,0, 640, 50, 50, 195, 205, 20, 25);
+		}
 	}else if(mousePos.x > 750 && mousePos.x < 800 && mousePos.y > 300 && mousePos.y < 350){
 		ctx.drawImage(sprite, 50, 200, 50, 50, 750, 300, 50, 50);
 	}else{
@@ -493,7 +501,7 @@ function ikony(){
 			ctx2.drawImage(sprite,0, 640, 50, 50, 195, 85, 20, 25);
 		}
 		if(menu.przewijanie){
-			if(predkoscPrzewijaniaMapy == 0){
+			if(predkoscPrzewijaniaMapy === 0){
 				ctx.drawImage(sprite,50, 740, 50, 50, 230, 80, 25, 25);
 			}else{
 				ctx.drawImage(sprite,0, 740, 50, 50, 230, 80, 25, 25);
@@ -551,6 +559,15 @@ $(document).ready(function() {
 				if(oEvent.keyCode == 82){
 					pisanie("r");
 				}
+				if(oEvent.keyCode == 40)/* dol */{
+					drawoncanvasmove(0,25,postac[0]);
+				}else if(oEvent.keyCode == 39) /* prawo */{
+						drawoncanvasmove(25,0,postac[0]);
+				}else if(oEvent.keyCode == 37)/* lewo */{
+						drawoncanvasmove(-25,0,postac[0]);
+				}else if(oEvent.keyCode == 38)/* gora */{
+						drawoncanvasmove(0,-25,postac[0]);
+				}
 				
 		});
 });
@@ -562,7 +579,7 @@ function wyswietlanieMenu(){
 	ctx.clearRect(0, 0, 600, 450);
 	//ctx.clearRect(0, 0, 600, 600);
 	ctx.fillStyle = "rgb(198,170,123)";
-	ctx.font = "25px Rockwell";
+	ctx.font = "25px Comic Sans MS";
 	if(menu.glowne){
 
 		ctx.drawImage(bgs,1200,450,600,450,0,0,800,600);
@@ -611,7 +628,7 @@ function wyswietlanieMenu(){
 	if(menu.statystyki){
 		ctx.drawImage(bgs,600,450,600,450,0,0,600,450);
 		ctx.fillStyle = "(198,170,123)";
-		ctx.font = "15px rockwell";
+		ctx.font = "15px Comic Sans MS";
 		ctx.fillText("Postać",100,50);
 		ctx.fillText("Obóz : "+postac[0].oboz,100,70);
 		ctx.fillText("Poziom : "+postac[0].poziom,100,90);
@@ -641,16 +658,17 @@ function wyswietlanieMenu(){
 		ctx.drawImage(bgs,0,0,600,450,0,0,600,450);
 	}
 	if(menu.dziennik){
+		ctx.font = "15px Comic Sans MS";
 		ctx.drawImage(bgs,1200,0,600,450,0,0,600,450);
+		ctx.fillText('Zadania aktywne',55,95);         
+		ctx.fillText('Zadania ukonczone',46,220);
 	}
 	if(menu.osiagniecia){
 		ctx.drawImage(bgs,0,0,600,450,0,0,600,450);
 	}
 	if(menu.opcjeGra){
 		ctx.drawImage(bgs,0,450,600,450,0,0,600,450);
-	}
-	if(menu.opcjeGra){
-		ctx.font = "15px rockwell";
+		ctx.font = "15px Comic Sans MS";
 		ctx.fillText("Prędkość przewijania",45,100);
 		ctx.fillText("mapy:",95,115);
 		ctx.fillText("Muzyka:",85,150);	
@@ -666,7 +684,7 @@ function wyswietlanieMenu(){
 
 function interfejsDane(){
 	if(menu.interfejs && !menu.opcje && !menu.glowne && !menu.wczytaj && !menu.nowa){
-		ctx2.font = "10px rockwell";		
+		ctx2.font = "10px Comic Sans MS";		
 		ctx2.drawImage(sprite,250, 50, 100, 50, 600, 200, 100, 25);
 		ctx2.drawImage(sprite,150, 50, 50, 50, 600, 200, 100/(maxHp/postac[0].hp), 25);
 		ctx2.drawImage(sprite,150, 200, 100, 50, 600, 200, 100, 25);
@@ -687,23 +705,25 @@ function interfejsDane(){
 }
 
 
+function odswiezanie() {
+	setInterval(function() {
+			ctx2.clearRect(0, 0, 800, 600);
+			if(menu.interfejs){
+				ikony();
+			}
+			minimapa();
+			mapaGra();
+			interfejsDane();
+			opisy();
+			muzyka();
+			ekwipunek();
+			wyswietlanieEkwipunku();
+			if(menu.czary){
+				czary();
+			}
+			ctx2.fillText(konsolaWpisywanie[0],0,500);
 
-
-function czas(){
-	var czas = new Date;
-	if (czas.getHours()<10) ctx.fillText("0",200,200);
-	ctx.fillText(czas.getHours()+":",220,200);
-	if (czas.getMinutes()<10) ctx.fillText("0",230,200);
-	ctx.fillText(czas.getMinutes()+":",250,200);
-	if (czas.getSeconds()<10) ctx.fillText("0",260,200);
-	ctx.fillText(czas.getSeconds(),280,200);
-	
-	
-	if (czas.getDate()<10) ctx.fillText("0",200,250);
-	ctx.fillText(czas.getDate()+".",213,250);
-	if ((czas.getMonth()+1)<10) ctx.fillText("0",231,250);
-	ctx.fillText((czas.getMonth()+1)+"."+czas.getFullYear(),246,250);	
-	
-}
+	}, 25);
+} 
 
 
